@@ -41,6 +41,7 @@
 
 @interface OBDragDropManager (Private)
 
+-(void) handleApplicationOrientationChange:(NSNotification*)notification;
 -(void) cleanupOvum:(OBOvum*)ovum;
 
 @end
@@ -63,6 +64,56 @@
 }
 
 
+-(id) init
+{
+  self = [super init];
+  if (self)
+  {
+    __block id __self = self;
+    [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidChangeStatusBarOrientationNotification
+                                                      object:[UIApplication sharedApplication]
+                                                       queue:[NSOperationQueue mainQueue]
+                                                  usingBlock:^(NSNotification *notification) {
+                                                    [__self handleApplicationOrientationChange:notification];
+                                                  }];
+  }
+  return self;
+}
+
+
+-(void) dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:[UIApplication sharedApplication]];
+  
+  [super dealloc];
+}
+
+
+// Utility function from http://stackoverflow.com/questions/6697605/iphone-uiwindow-rotating-depending-on-current-orientation
+//
+- (CGAffineTransform)transformForOrientation:(UIInterfaceOrientation)orientation 
+{
+  switch (orientation) 
+  {
+    case UIInterfaceOrientationLandscapeLeft:
+      return CGAffineTransformMakeRotation(-90.0 * M_PI / 180);
+    case UIInterfaceOrientationLandscapeRight:
+      return CGAffineTransformMakeRotation(90.0 * M_PI / 180);
+    case UIInterfaceOrientationPortraitUpsideDown:
+      return CGAffineTransformMakeRotation(M_PI);
+    case UIInterfaceOrientationPortrait:
+    default:
+      return CGAffineTransformIdentity;
+  }
+}
+
+-(void) handleApplicationOrientationChange:(NSNotification*)notification
+{
+  UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+  self.overlayWindow.transform = [self transformForOrientation:orientation]; //self.mainWindow.transform;
+}
+
+
 -(void) prepareOverlayWindowUsingMainWindow:(UIWindow*)mainWindow
 {
   if (self.overlayWindow)
@@ -70,7 +121,7 @@
     [self.overlayWindow removeFromSuperview];
     self.overlayWindow = nil;
   }
-  
+    
   self.overlayWindow = [[[UIWindow alloc] initWithFrame:mainWindow.frame] autorelease];
   self.overlayWindow.windowLevel = UIWindowLevelAlert;
   self.overlayWindow.hidden = YES;
