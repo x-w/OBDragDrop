@@ -163,7 +163,7 @@
 -(void) handleOvumMove:(OBOvum*)ovum inWindow:(UIWindow*)window atLocation:(CGPoint)locationInWindow
 {
   UIView *handlingView = [self findDropZoneHandlerInWindow:window atLocation:locationInWindow];
-  CGPoint locationInView = [self.overlayWindow convertPoint:locationInWindow toView:handlingView];
+  CGPoint locationInView = [window convertPoint:locationInWindow toView:handlingView];
   
   // Handle change in drop target
   if (ovum.currentDropHandlingView != handlingView)
@@ -266,14 +266,14 @@
       dragView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.33];
     }
     
-    // Give the ovum source a change to manipulate or animate the drag view
-    if ([ovumSource respondsToSelector:@selector(dragViewWillAppear:inWindow:atLocation:)])
-      [ovumSource dragViewWillAppear:dragView inWindow:overlayWindow atLocation:locationInOverlayWindow];
-    
     overlayWindow.hidden = NO;
     [overlayWindow addSubview:dragView];
     recognizer.ovum.dragView = dragView;
-    recognizer.ovum.dragViewInitialCenter = locationInOverlayWindow;
+    recognizer.ovum.dragViewInitialCenter = dragView.center;
+    
+    // Give the ovum source a change to manipulate or animate the drag view
+    if ([ovumSource respondsToSelector:@selector(dragViewWillAppear:inWindow:atLocation:)])
+      [ovumSource dragViewWillAppear:dragView inWindow:overlayWindow atLocation:locationInOverlayWindow];
   }
   else if (recognizer.state == UIGestureRecognizerStateChanged)
   {
@@ -319,8 +319,6 @@
           overlayWindow.hidden = YES;
         }];
       }
-      
-      overlayWindow.hidden = YES;
     }
     else
     {
