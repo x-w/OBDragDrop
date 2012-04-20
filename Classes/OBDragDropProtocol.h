@@ -32,9 +32,16 @@ typedef enum {
 -(UIView *) createDragRepresentationOfSourceView:(UIView *)sourceView inWindow:(UIWindow*)window;
 -(void) dragViewWillAppear:(UIView *)dragView inWindow:(UIWindow*)window atLocation:(CGPoint)location;
 
+// In all honesty, the above delegate method could also serve as a 'will begin' message
+// but adding this here to be a little more explicit
+-(void) ovumDragWillBegin:(OBOvum*)ovum;
+
 // The following allows an ovum source to react appropriate if an ovum that originated from it
 // was dropped. For example, if the drag drop action is move, the source can remove the source view
 -(void) ovumWasDropped:(OBOvum*)ovum withDropAction:(OBDropAction)dropAction;
+
+// Called regardless of whether the ovum drop was successful or cancelled
+-(void) ovumDragEnded:(OBOvum*)ovum;
 
 @end
 

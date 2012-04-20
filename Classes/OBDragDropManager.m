@@ -252,6 +252,7 @@
     id<OBOvumSource> ovumSource = recognizer.ovumSource;
     
     recognizer.ovum = [ovumSource createOvumFromView:sourceView];
+    recognizer.ovum.source = ovumSource;
     
     if ([ovumSource respondsToSelector:@selector(createDragRepresentationOfSourceView:inWindow:)])
     {
@@ -274,6 +275,9 @@
     // Give the ovum source a change to manipulate or animate the drag view
     if ([ovumSource respondsToSelector:@selector(dragViewWillAppear:inWindow:atLocation:)])
       [ovumSource dragViewWillAppear:dragView inWindow:overlayWindow atLocation:locationInOverlayWindow];
+    
+    if ([ovumSource respondsToSelector:@selector(ovumDragWillBegin:)])
+      [ovumSource ovumDragWillBegin:recognizer.ovum];
   }
   else if (recognizer.state == UIGestureRecognizerStateChanged)
   {
@@ -360,6 +364,12 @@
 
 -(void) cleanupOvum:(OBOvum*)ovum
 {
+  if (ovum.source)
+  {
+    [ovum.source ovumDragEnded:ovum];
+    ovum.source = nil;
+  }
+  
   ovum.dragView = nil;
   ovum.currentDropHandlingView = nil;
 }
