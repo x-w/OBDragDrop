@@ -201,7 +201,7 @@
     dragView.center = dragViewInitialCenter;
     //dragView.transform = CGAffineTransformMakeScale(0.01, 0.01);
     dragView.transform = CGAffineTransformIdentity;
-    dragView.alpha = 0.0;
+    //dragView.alpha = 0.0;
   } completion:^(BOOL finished) {
     [dragView removeFromSuperview];
     overlayWindow.hidden = YES;
