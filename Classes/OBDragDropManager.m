@@ -187,7 +187,8 @@
   else
   {
     id<OBDropZone> dropZone = ovum.currentDropHandlingView.dropZoneHandler;
-    ovum.dropAction = [dropZone ovumMoved:ovum inView:handlingView atLocation:locationInView];
+    if ([dropZone respondsToSelector:@selector(ovumMoved:inView:atLocation:)])
+      ovum.dropAction = [dropZone ovumMoved:ovum inView:handlingView atLocation:locationInView];
   }
 }
 

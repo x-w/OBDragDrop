@@ -52,10 +52,11 @@ typedef enum {
 @required
 -(void) ovumDropped:(OBOvum*)ovum inView:(UIView*)view atLocation:(CGPoint)location;
 
-@optional
 -(OBDropAction) ovumEntered:(OBOvum*)ovum inView:(UIView*)view atLocation:(CGPoint)location;
--(OBDropAction) ovumMoved:(OBOvum*)ovum inView:(UIView*)view atLocation:(CGPoint)location;
 -(void) ovumExited:(OBOvum*)ovum inView:(UIView*)view atLocation:(CGPoint)location;
+
+@optional
+-(OBDropAction) ovumMoved:(OBOvum*)ovum inView:(UIView*)view atLocation:(CGPoint)location;
 
 // If this delegate method is implemented, OBDragDropManager will not automatically animate the disappearance
 // of the ovum's drag view and the delegate is required to call the following method to make sure all the
