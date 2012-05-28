@@ -11,6 +11,11 @@
 #import "OBLongPressDragDropGestureRecognizer.h"
 
 
+// NSNotifications that gets broadcasted when a drag and drop has started or ended
+#define OBDragDropManagerWillBeginDragNotification @"OBDragDropManagerWillBeginDrag"
+#define OBDragDropManagerDidEndDragNotification @"OBDragDropManagerDidEndDrag"
+
+
 // OBOvum represents a data object that is being dragged around a UI window, named
 // after the g-speak equivalent within the Ovipositor infrastructure.
 // It also is responsible for keeping track of the drag view (a visual representation

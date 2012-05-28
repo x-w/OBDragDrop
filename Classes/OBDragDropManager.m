@@ -279,6 +279,8 @@
     
     if ([ovumSource respondsToSelector:@selector(ovumDragWillBegin:)])
       [ovumSource ovumDragWillBegin:recognizer.ovum];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:OBDragDropManagerWillBeginDragNotification object:self];
   }
   else if (recognizer.state == UIGestureRecognizerStateChanged)
   {
@@ -340,6 +342,8 @@
     
     // Reset the ovum recognizer
     recognizer.ovum = nil;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:OBDragDropManagerDidEndDragNotification object:self];
   }
   else if (recognizer.state == UIGestureRecognizerStateCancelled ||
            recognizer.state == UIGestureRecognizerStateEnded)
@@ -359,6 +363,8 @@
     
     // Reset the ovum recognizer
     recognizer.ovum = nil;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:OBDragDropManagerDidEndDragNotification object:self];
   }
 }
 
