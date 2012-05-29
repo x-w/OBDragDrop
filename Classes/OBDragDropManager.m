@@ -373,7 +373,8 @@
 {
   if (ovum.source)
   {
-    [ovum.source ovumDragEnded:ovum];
+    if ([ovum.source respondsToSelector:@selector(ovumDragEnded:)])
+      [ovum.source ovumDragEnded:ovum];
     ovum.source = nil;
   }
   
