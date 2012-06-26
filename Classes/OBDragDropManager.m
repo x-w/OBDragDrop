@@ -326,6 +326,10 @@
           overlayWindow.hidden = YES;
         }];
       }
+      
+      // Inform the OBOvumSource that an ovum originating from it has been dropped successfully
+      if ([ovum.source respondsToSelector:@selector(ovumWasDropped:withDropAction:)])
+        [ovum.source ovumWasDropped:ovum withDropAction:ovum.dropAction];
     }
     else
     {
