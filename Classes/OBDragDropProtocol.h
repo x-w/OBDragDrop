@@ -14,6 +14,7 @@ typedef enum {
   OBDropActionNone = 0,
   OBDropActionCopy = 1,
   OBDropActionMove = 2,
+  OBDropActionDelete = 3,
 } OBDropAction;
 
 

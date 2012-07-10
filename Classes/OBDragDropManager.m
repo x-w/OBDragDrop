@@ -318,13 +318,10 @@
       }
       else
       {
-        [UIView animateWithDuration:0.25 animations:^{
+        [self animateOvumDrop:ovum withAnimation:^{
           dragView.transform = CGAffineTransformMakeScale(0.01, 0.01);
           dragView.alpha = 0.0;
-        } completion:^(BOOL finished) {
-          [dragView removeFromSuperview];
-          overlayWindow.hidden = YES;
-        }];
+        } completion:nil];
       }
       
       // Inform the OBOvumSource that an ovum originating from it has been dropped successfully
