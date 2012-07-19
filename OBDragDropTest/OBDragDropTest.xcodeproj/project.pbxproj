@@ -1,0 +1,327 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		390E611D14F6CB8100F8FA74 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 390E611C14F6CB8100F8FA74 /* UIKit.framework */; };
+		390E611F14F6CB8100F8FA74 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 390E611E14F6CB8100F8FA74 /* Foundation.framework */; };
+		390E612114F6CB8100F8FA74 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 390E612014F6CB8100F8FA74 /* CoreGraphics.framework */; };
+		390E612714F6CB8100F8FA74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 390E612514F6CB8100F8FA74 /* InfoPlist.strings */; };
+		390E612914F6CB8100F8FA74 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 390E612814F6CB8100F8FA74 /* main.m */; };
+		390E612D14F6CB8100F8FA74 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 390E612C14F6CB8100F8FA74 /* AppDelegate.m */; };
+		390E613014F6CB8100F8FA74 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 390E612F14F6CB8100F8FA74 /* ViewController.m */; };
+		390E613314F6CB8200F8FA74 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 390E613114F6CB8200F8FA74 /* ViewController_iPhone.xib */; };
+		390E613614F6CB8200F8FA74 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 390E613414F6CB8200F8FA74 /* ViewController_iPad.xib */; };
+		390E619415011DD700F8FA74 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 390E619315011DD700F8FA74 /* QuartzCore.framework */; };
+		3968602415B864B0009C3D7B /* OBDragDropManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3968601E15B864B0009C3D7B /* OBDragDropManager.m */; };
+		3968602515B864B0009C3D7B /* OBLongPressDragDropGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3968602115B864B0009C3D7B /* OBLongPressDragDropGestureRecognizer.m */; };
+		3968602615B864B0009C3D7B /* UIView+OBDropZone.m in Sources */ = {isa = PBXBuildFile; fileRef = 3968602315B864B0009C3D7B /* UIView+OBDropZone.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		390E611814F6CB8100F8FA74 /* OBDragDropTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OBDragDropTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		390E611C14F6CB8100F8FA74 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		390E611E14F6CB8100F8FA74 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		390E612014F6CB8100F8FA74 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		390E612414F6CB8100F8FA74 /* OBDragDropTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OBDragDropTest-Info.plist"; sourceTree = "<group>"; };
+		390E612614F6CB8100F8FA74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		390E612814F6CB8100F8FA74 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		390E612A14F6CB8100F8FA74 /* OBDragDropTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OBDragDropTest-Prefix.pch"; sourceTree = "<group>"; };
+		390E612B14F6CB8100F8FA74 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		390E612C14F6CB8100F8FA74 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		390E612E14F6CB8100F8FA74 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		390E612F14F6CB8100F8FA74 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		390E613214F6CB8200F8FA74 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
+		390E613514F6CB8200F8FA74 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
+		390E619315011DD700F8FA74 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3968601D15B864B0009C3D7B /* OBDragDropManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OBDragDropManager.h; path = ../../Classes/OBDragDropManager.h; sourceTree = "<group>"; };
+		3968601E15B864B0009C3D7B /* OBDragDropManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OBDragDropManager.m; path = ../../Classes/OBDragDropManager.m; sourceTree = "<group>"; };
+		3968601F15B864B0009C3D7B /* OBDragDropProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OBDragDropProtocol.h; path = ../../Classes/OBDragDropProtocol.h; sourceTree = "<group>"; };
+		3968602015B864B0009C3D7B /* OBLongPressDragDropGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OBLongPressDragDropGestureRecognizer.h; path = ../../Classes/OBLongPressDragDropGestureRecognizer.h; sourceTree = "<group>"; };
+		3968602115B864B0009C3D7B /* OBLongPressDragDropGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OBLongPressDragDropGestureRecognizer.m; path = ../../Classes/OBLongPressDragDropGestureRecognizer.m; sourceTree = "<group>"; };
+		3968602215B864B0009C3D7B /* UIView+OBDropZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+OBDropZone.h"; path = "../../Classes/UIView+OBDropZone.h"; sourceTree = "<group>"; };
+		3968602315B864B0009C3D7B /* UIView+OBDropZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+OBDropZone.m"; path = "../../Classes/UIView+OBDropZone.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		390E611514F6CB8100F8FA74 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				390E619415011DD700F8FA74 /* QuartzCore.framework in Frameworks */,
+				390E611D14F6CB8100F8FA74 /* UIKit.framework in Frameworks */,
+				390E611F14F6CB8100F8FA74 /* Foundation.framework in Frameworks */,
+				390E612114F6CB8100F8FA74 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		390E610D14F6CB8100F8FA74 = {
+			isa = PBXGroup;
+			children = (
+				390E612214F6CB8100F8FA74 /* OBDragDropTest */,
+				390E611B14F6CB8100F8FA74 /* Frameworks */,
+				390E611914F6CB8100F8FA74 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		390E611914F6CB8100F8FA74 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				390E611814F6CB8100F8FA74 /* OBDragDropTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		390E611B14F6CB8100F8FA74 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				390E611C14F6CB8100F8FA74 /* UIKit.framework */,
+				390E611E14F6CB8100F8FA74 /* Foundation.framework */,
+				390E612014F6CB8100F8FA74 /* CoreGraphics.framework */,
+				390E619315011DD700F8FA74 /* QuartzCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		390E612214F6CB8100F8FA74 /* OBDragDropTest */ = {
+			isa = PBXGroup;
+			children = (
+				3968601B15B864A3009C3D7B /* Classes */,
+				390E612B14F6CB8100F8FA74 /* AppDelegate.h */,
+				390E612C14F6CB8100F8FA74 /* AppDelegate.m */,
+				390E612E14F6CB8100F8FA74 /* ViewController.h */,
+				390E612F14F6CB8100F8FA74 /* ViewController.m */,
+				390E613114F6CB8200F8FA74 /* ViewController_iPhone.xib */,
+				390E613414F6CB8200F8FA74 /* ViewController_iPad.xib */,
+				390E612314F6CB8100F8FA74 /* Supporting Files */,
+			);
+			path = OBDragDropTest;
+			sourceTree = "<group>";
+		};
+		390E612314F6CB8100F8FA74 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				390E612414F6CB8100F8FA74 /* OBDragDropTest-Info.plist */,
+				390E612514F6CB8100F8FA74 /* InfoPlist.strings */,
+				390E612814F6CB8100F8FA74 /* main.m */,
+				390E612A14F6CB8100F8FA74 /* OBDragDropTest-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3968601B15B864A3009C3D7B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				3968601D15B864B0009C3D7B /* OBDragDropManager.h */,
+				3968601E15B864B0009C3D7B /* OBDragDropManager.m */,
+				3968601F15B864B0009C3D7B /* OBDragDropProtocol.h */,
+				3968602015B864B0009C3D7B /* OBLongPressDragDropGestureRecognizer.h */,
+				3968602115B864B0009C3D7B /* OBLongPressDragDropGestureRecognizer.m */,
+				3968602215B864B0009C3D7B /* UIView+OBDropZone.h */,
+				3968602315B864B0009C3D7B /* UIView+OBDropZone.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		390E611714F6CB8100F8FA74 /* OBDragDropTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 390E613914F6CB8200F8FA74 /* Build configuration list for PBXNativeTarget "OBDragDropTest" */;
+			buildPhases = (
+				390E611414F6CB8100F8FA74 /* Sources */,
+				390E611514F6CB8100F8FA74 /* Frameworks */,
+				390E611614F6CB8100F8FA74 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OBDragDropTest;
+			productName = OBDragDropTest;
+			productReference = 390E611814F6CB8100F8FA74 /* OBDragDropTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		390E610F14F6CB8100F8FA74 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Oblong Industries";
+			};
+			buildConfigurationList = 390E611214F6CB8100F8FA74 /* Build configuration list for PBXProject "OBDragDropTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 390E610D14F6CB8100F8FA74;
+			productRefGroup = 390E611914F6CB8100F8FA74 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				390E611714F6CB8100F8FA74 /* OBDragDropTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		390E611614F6CB8100F8FA74 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				390E612714F6CB8100F8FA74 /* InfoPlist.strings in Resources */,
+				390E613314F6CB8200F8FA74 /* ViewController_iPhone.xib in Resources */,
+				390E613614F6CB8200F8FA74 /* ViewController_iPad.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		390E611414F6CB8100F8FA74 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				390E612914F6CB8100F8FA74 /* main.m in Sources */,
+				390E612D14F6CB8100F8FA74 /* AppDelegate.m in Sources */,
+				390E613014F6CB8100F8FA74 /* ViewController.m in Sources */,
+				3968602415B864B0009C3D7B /* OBDragDropManager.m in Sources */,
+				3968602515B864B0009C3D7B /* OBLongPressDragDropGestureRecognizer.m in Sources */,
+				3968602615B864B0009C3D7B /* UIView+OBDropZone.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		390E612514F6CB8100F8FA74 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				390E612614F6CB8100F8FA74 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		390E613114F6CB8200F8FA74 /* ViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				390E613214F6CB8200F8FA74 /* en */,
+			);
+			name = ViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		390E613414F6CB8200F8FA74 /* ViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				390E613514F6CB8200F8FA74 /* en */,
+			);
+			name = ViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		390E613714F6CB8200F8FA74 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		390E613814F6CB8200F8FA74 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		390E613A14F6CB8200F8FA74 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OBDragDropTest/OBDragDropTest-Prefix.pch";
+				INFOPLIST_FILE = "OBDragDropTest/OBDragDropTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		390E613B14F6CB8200F8FA74 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OBDragDropTest/OBDragDropTest-Prefix.pch";
+				INFOPLIST_FILE = "OBDragDropTest/OBDragDropTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		390E611214F6CB8100F8FA74 /* Build configuration list for PBXProject "OBDragDropTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				390E613714F6CB8200F8FA74 /* Debug */,
+				390E613814F6CB8200F8FA74 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		390E613914F6CB8200F8FA74 /* Build configuration list for PBXNativeTarget "OBDragDropTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				390E613A14F6CB8200F8FA74 /* Debug */,
+				390E613B14F6CB8200F8FA74 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 390E610F14F6CB8100F8FA74 /* Project object */;
+}
