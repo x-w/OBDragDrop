@@ -14,4 +14,12 @@
 @synthesize ovum;
 @synthesize ovumSource;
 
+-(void) dealloc
+{
+  self.ovum = nil;
+  self.ovumSource = nil;
+  
+  [super dealloc];
+}
+
 @end
