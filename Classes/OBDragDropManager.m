@@ -22,6 +22,17 @@
 @synthesize dragView;
 @synthesize dragViewInitialCenter;
 
+@synthesize isCentered;
+@synthesize offsetOvumAndTouch;
+
+- (id)init
+{
+  self = [super init];
+  if (self) {
+    self.isCentered = YES;
+  }
+  return self;
+}
 
 -(void) dealloc
 {
@@ -273,9 +284,17 @@
     recognizer.ovum.dragView = dragView;
     recognizer.ovum.dragViewInitialCenter = dragView.center;
     
+    if (!recognizer.ovum.isCentered)
+    {
+      CGPoint offset;
+      offset.x = locationInOverlayWindow.x - dragView.center.x;
+      offset.y = locationInOverlayWindow.y - dragView.center.y;
+      recognizer.ovum.offsetOvumAndTouch = offset;
+    }
+    
     // Give the ovum source a change to manipulate or animate the drag view
     if ([ovumSource respondsToSelector:@selector(dragViewWillAppear:inWindow:atLocation:)])
-      [ovumSource dragViewWillAppear:dragView inWindow:overlayWindow atLocation:locationInOverlayWindow];
+      [ovumSource dragViewWillAppear:dragView inWindow:overlayWindow atLocation:(recognizer.ovum.isCentered) ? locationInOverlayWindow:dragView.center];
     
     if ([ovumSource respondsToSelector:@selector(ovumDragWillBegin:)])
       [ovumSource ovumDragWillBegin:recognizer.ovum];
@@ -287,9 +306,21 @@
   {
     OBOvum *ovum = recognizer.ovum;
     UIView *dragView = ovum.dragView;
-    dragView.center = locationInOverlayWindow;
     
+    if (recognizer.ovum.isCentered)
+    {
+      dragView.center = locationInOverlayWindow;
+    }
+    else 
+    {
+      CGPoint newCenter;
+      newCenter.x = locationInOverlayWindow.x - recognizer.ovum.offsetOvumAndTouch.x;
+      newCenter.y = locationInOverlayWindow.y - recognizer.ovum.offsetOvumAndTouch.y;
+      dragView.center = newCenter;
+    }
+
     [self handleOvumMove:ovum inWindow:hostWindow atLocation:locationInHostWindow];
+  
   }
   else if (recognizer.state == UIGestureRecognizerStateEnded && recognizer.ovum.currentDropHandlingView)
   {
@@ -307,9 +338,19 @@
       // Drop action is possible and drop zone is available
       UIView *handlingView = [self findDropZoneHandlerInWindow:hostWindow atLocation:locationInHostWindow];
       CGPoint locationInView = [hostWindow convertPoint:locationInHostWindow toView:handlingView];
-      
-      [dropZone ovumDropped:ovum inView:handlingView atLocation:locationInView];
-      
+            
+      if (recognizer.ovum.isCentered)
+      {
+        [dropZone ovumDropped:ovum inView:handlingView atLocation:locationInView];
+      }
+      else 
+      {
+        CGPoint newCenter;
+        newCenter.x = locationInView.x - recognizer.ovum.offsetOvumAndTouch.x;
+        newCenter.y = locationInView.y - recognizer.ovum.offsetOvumAndTouch.y;
+        [dropZone ovumDropped:ovum inView:handlingView atLocation:newCenter];
+      }
+            
       // For use in blocks below
       UIView *dragView = ovum.dragView;
       

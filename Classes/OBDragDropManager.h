@@ -34,6 +34,9 @@
   
   UIView *dragView; // View to represent the dragged object
   CGPoint dragViewInitialCenter;
+  
+  BOOL isCentered;
+  CGPoint offsetOvumAndTouch;
 }
 @property (nonatomic, assign) id<OBOvumSource> source;
 @property (nonatomic, retain) id dataObject;
@@ -44,6 +47,8 @@
 @property (nonatomic, assign) UIView *currentDropHandlingView;
 @property (nonatomic, retain) UIView *dragView;
 @property (nonatomic, assign) CGPoint dragViewInitialCenter;
+@property (nonatomic, assign) BOOL isCentered;
+@property (nonatomic, assign) CGPoint offsetOvumAndTouch;
 
 @end
 
@@ -52,6 +57,7 @@
 @interface OBDragDropManager : NSObject <UIGestureRecognizerDelegate>
 {
 }
+
 @property (nonatomic, retain) UIWindow *overlayWindow;
 
 +(OBDragDropManager *) sharedManager;
