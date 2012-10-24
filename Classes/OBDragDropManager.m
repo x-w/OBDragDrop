@@ -37,12 +37,12 @@
 -(void) dealloc
 {
   DLog(@"%@ dealloc", [self class]);
-  
+
   self.dataObject = nil;
   self.tag = nil;
   self.source = nil;
   self.dragView = nil;
-  
+
   [super dealloc];
 }
 
@@ -95,16 +95,16 @@
 -(void) dealloc
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:[UIApplication sharedApplication]];
-  
+
   [super dealloc];
 }
 
 
 // Utility function from http://stackoverflow.com/questions/6697605/iphone-uiwindow-rotating-depending-on-current-orientation
 //
-- (CGAffineTransform)transformForOrientation:(UIInterfaceOrientation)orientation 
+- (CGAffineTransform)transformForOrientation:(UIInterfaceOrientation)orientation
 {
-  switch (orientation) 
+  switch (orientation)
   {
     case UIInterfaceOrientationLandscapeLeft:
       return CGAffineTransformMakeRotation(-90.0 * M_PI / 180);
@@ -132,10 +132,11 @@
     [self.overlayWindow removeFromSuperview];
     self.overlayWindow = nil;
   }
-    
+
   self.overlayWindow = [[[UIWindow alloc] initWithFrame:mainWindow.frame] autorelease];
   self.overlayWindow.windowLevel = UIWindowLevelAlert;
   self.overlayWindow.hidden = YES;
+  self.overlayWindow.transform = [self transformForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
 }
 
 
@@ -146,11 +147,11 @@
 {
   if (view.dropZoneHandler)
     return view;
-  
+
   UIView *superview = [view superview];
   if (superview)
     return [self findDropTargetHandler:superview];
-  
+
   return nil;
 }
 
@@ -163,7 +164,7 @@
     DLog(@"OBDragDropManager findDropZoneHandlerInWindow: Furthest view is nil!");
     return nil;
   }
-  
+
   UIView *handlingView = [self findDropTargetHandler:furthestView];
   return handlingView;
 }
@@ -175,7 +176,7 @@
 {
   UIView *handlingView = [self findDropZoneHandlerInWindow:window atLocation:locationInWindow];
   CGPoint locationInView = [window convertPoint:locationInWindow toView:handlingView];
-  
+
   // Handle change in drop target
   if (ovum.currentDropHandlingView != handlingView)
   {
@@ -185,9 +186,9 @@
       [dropZone ovumExited:ovum inView:ovum.currentDropHandlingView atLocation:locationInView];
       ovum.dropAction = OBDropActionNone;
     }
-    
+
     ovum.currentDropHandlingView = handlingView;
-    
+
     if (ovum.currentDropHandlingView)
     {
       id<OBDropZone> dropZone = ovum.currentDropHandlingView.dropZoneHandler;
@@ -208,7 +209,7 @@
 {
   CGPoint dragViewInitialCenter = ovum.dragViewInitialCenter;
   UIView *dragView = ovum.dragView;
-  
+
   [UIView animateWithDuration:0.25 animations:^{
     dragView.center = dragViewInitialCenter;
     //dragView.transform = CGAffineTransformMakeScale(0.01, 0.01);
@@ -225,15 +226,15 @@
 {
   if (dropAnimation == nil)
     return;
-  
+
   UIView *dragView = ovum.dragView;
-  
+
   [UIView animateWithDuration:0.25
-                   animations:dropAnimation 
+                   animations:dropAnimation
                    completion:^(BOOL finished) {
                      if (completion)
                        completion(finished);
-                     
+
                      [dragView removeFromSuperview];
                      overlayWindow.hidden = YES;
                    }];
@@ -256,16 +257,16 @@
   UIWindow *hostWindow = recognizer.view.window;
   CGPoint locationInHostWindow = [recognizer locationInView:hostWindow];
   CGPoint locationInOverlayWindow = [recognizer locationInView:overlayWindow];
-  
+
   if (recognizer.state == UIGestureRecognizerStateBegan)
   {
     UIView *sourceView = recognizer.view;
     UIView *dragView = nil;
     id<OBOvumSource> ovumSource = recognizer.ovumSource;
-    
+
     recognizer.ovum = [ovumSource createOvumFromView:sourceView];
     recognizer.ovum.source = ovumSource;
-    
+
     if ([ovumSource respondsToSelector:@selector(createDragRepresentationOfSourceView:inWindow:)])
     {
       dragView = [ovumSource createDragRepresentationOfSourceView:recognizer.view inWindow:overlayWindow];
@@ -278,12 +279,12 @@
       dragView.opaque = NO;
       dragView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.33];
     }
-    
+
     overlayWindow.hidden = NO;
     [overlayWindow addSubview:dragView];
     recognizer.ovum.dragView = dragView;
     recognizer.ovum.dragViewInitialCenter = dragView.center;
-    
+
     if (!recognizer.ovum.isCentered)
     {
       CGPoint offset;
@@ -291,14 +292,14 @@
       offset.y = locationInOverlayWindow.y - dragView.center.y;
       recognizer.ovum.offsetOvumAndTouch = offset;
     }
-    
+
     // Give the ovum source a change to manipulate or animate the drag view
     if ([ovumSource respondsToSelector:@selector(dragViewWillAppear:inWindow:atLocation:)])
       [ovumSource dragViewWillAppear:dragView inWindow:overlayWindow atLocation:(recognizer.ovum.isCentered) ? locationInOverlayWindow:dragView.center];
-    
+
     if ([ovumSource respondsToSelector:@selector(ovumDragWillBegin:)])
       [ovumSource ovumDragWillBegin:recognizer.ovum];
-    
+
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:recognizer.ovum, OBOvumDictionaryKey, nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:OBDragDropManagerWillBeginDragNotification object:self userInfo:userInfo];
   }
@@ -306,12 +307,12 @@
   {
     OBOvum *ovum = recognizer.ovum;
     UIView *dragView = ovum.dragView;
-    
+
     if (recognizer.ovum.isCentered)
     {
       dragView.center = locationInOverlayWindow;
     }
-    else 
+    else
     {
       CGPoint newCenter;
       newCenter.x = locationInOverlayWindow.x - recognizer.ovum.offsetOvumAndTouch.x;
@@ -320,40 +321,40 @@
     }
 
     [self handleOvumMove:ovum inWindow:hostWindow atLocation:locationInHostWindow];
-  
+
   }
   else if (recognizer.state == UIGestureRecognizerStateEnded && recognizer.ovum.currentDropHandlingView)
   {
     // Handle the case that the ovum was dropped successfully onto a drop target
     OBOvum *ovum = recognizer.ovum;
-    
+
     // Handle ovum movement since its location can be different than the last
     // UIGestureRecognizerStateChanged event
     [self handleOvumMove:ovum inWindow:hostWindow atLocation:locationInHostWindow];
-    
+
     id<OBDropZone> dropZone = recognizer.ovum.currentDropHandlingView.dropZoneHandler;
-    
+
     if (ovum.dropAction != OBDropActionNone && dropZone)
     {
       // Drop action is possible and drop zone is available
       UIView *handlingView = [self findDropZoneHandlerInWindow:hostWindow atLocation:locationInHostWindow];
       CGPoint locationInView = [hostWindow convertPoint:locationInHostWindow toView:handlingView];
-            
+
       if (recognizer.ovum.isCentered)
       {
         [dropZone ovumDropped:ovum inView:handlingView atLocation:locationInView];
       }
-      else 
+      else
       {
         CGPoint newCenter;
         newCenter.x = locationInView.x - recognizer.ovum.offsetOvumAndTouch.x;
         newCenter.y = locationInView.y - recognizer.ovum.offsetOvumAndTouch.y;
         [dropZone ovumDropped:ovum inView:handlingView atLocation:newCenter];
       }
-            
+
       // For use in blocks below
       UIView *dragView = ovum.dragView;
-      
+
       if ([dropZone respondsToSelector:@selector(handleDropAnimationForOvum:withDragView:dragDropManager:)])
       {
         [dropZone handleDropAnimationForOvum:ovum withDragView:dragView dragDropManager:self];
@@ -365,7 +366,7 @@
           dragView.alpha = 0.0;
         } completion:nil];
       }
-      
+
       // Inform the OBOvumSource that an ovum originating from it has been dropped successfully
       if ([ovum.source respondsToSelector:@selector(ovumWasDropped:withDropAction:)])
         [ovum.source ovumWasDropped:ovum withDropAction:ovum.dropAction];
@@ -376,16 +377,16 @@
       UIView *handlingView = ovum.currentDropHandlingView;
       CGPoint locationInView = [hostWindow convertPoint:locationInHostWindow toView:handlingView];
       [dropZone ovumExited:ovum inView:handlingView atLocation:locationInView];
-      
+
       // Drop is rejected, return the ovum to its source
       [self animateOvumReturningToSource:ovum];
     }
-    
+
     [self cleanupOvum:ovum];
-    
+
     // Reset the ovum recognizer
     recognizer.ovum = nil;
-    
+
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:recognizer.ovum, OBOvumDictionaryKey, nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:OBDragDropManagerDidEndDragNotification object:self userInfo:userInfo];
   }
@@ -396,18 +397,18 @@
     OBOvum *ovum = recognizer.ovum;
     UIView *handlingView = ovum.currentDropHandlingView;
     CGPoint locationInView = [hostWindow convertPoint:locationInHostWindow toView:handlingView];
-    
+
     // Tell current drop target to reset itself
     id<OBDropZone> dropZone = handlingView.dropZoneHandler;
     [dropZone ovumExited:ovum inView:handlingView atLocation:locationInView];
-    
+
     [self animateOvumReturningToSource:ovum];
-    
+
     [self cleanupOvum:ovum];
-    
+
     // Reset the ovum recognizer
     recognizer.ovum = nil;
-    
+
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:recognizer.ovum, OBOvumDictionaryKey, nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:OBDragDropManagerDidEndDragNotification object:self userInfo:userInfo];
   }
@@ -422,7 +423,7 @@
       [ovum.source ovumDragEnded:ovum];
     ovum.source = nil;
   }
-  
+
   ovum.dragView = nil;
   ovum.currentDropHandlingView = nil;
 }
