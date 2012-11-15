@@ -11,7 +11,4 @@
 
 @interface OBLongPressDragDropGestureRecognizer : UILongPressGestureRecognizer <OBDragDropGestureRecognizer>
 
-@property (nonatomic, retain) OBOvum *ovum;
-@property (nonatomic, assign) id<OBOvumSource> ovumSource;
-
 @end

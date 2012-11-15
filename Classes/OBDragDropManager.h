@@ -68,6 +68,11 @@
 // drag and drop overlay window
 -(void) prepareOverlayWindowUsingMainWindow:(UIWindow*)mainWindow;
 
+// Creates and registers a gesture recognizer for drag and drop
+// Note that this should be a continuous gesture such as pan or long press
+-(UIGestureRecognizer *) createDragDropGestureRecognizerWithClass:(Class)recognizerClass source:(id<OBOvumSource>)source;
+
+// Can be deprecated in favor of the above API
 -(OBLongPressDragDropGestureRecognizer*) createLongPressDragDropGestureRecognizerWithSource:(id<OBOvumSource>)source;
 
 -(void) animateOvumDrop:(OBOvum*)ovum withAnimation:(void (^)()) dropAnimation completion:(void (^)(BOOL completed))completion;
