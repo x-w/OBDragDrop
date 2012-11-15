@@ -62,7 +62,8 @@
 @implementation OBDragDropManager
 
 @synthesize overlayWindow;
-
+@synthesize currentLocationInHostWindow;
+@synthesize currentLocationInOverlayWindow;
 
 +(OBDragDropManager *) sharedManager
 {
@@ -257,6 +258,8 @@
   UIWindow *hostWindow = recognizer.view.window;
   CGPoint locationInHostWindow = [recognizer locationInView:hostWindow];
   CGPoint locationInOverlayWindow = [recognizer locationInView:overlayWindow];
+  currentLocationInHostWindow = locationInHostWindow;
+  currentLocationInOverlayWindow = locationInOverlayWindow;
 
   if (recognizer.state == UIGestureRecognizerStateBegan)
   {

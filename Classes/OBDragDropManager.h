@@ -59,6 +59,8 @@
 }
 
 @property (nonatomic, retain) UIWindow *overlayWindow;
+@property (nonatomic, assign) CGPoint currentLocationInHostWindow;
+@property (nonatomic, assign) CGPoint currentLocationInOverlayWindow;
 
 +(OBDragDropManager *) sharedManager;
 
