@@ -44,15 +44,21 @@ The one set up call necessary to initialize the drag drop manager is to associat
 ```
 
 
-#### Instantiating a OBLongPressDragDropRecognizer
+#### Instantiating a OBDragDropRecognizer
 
 Use OBDragDropManager as a factory for the drag drop specific gesture 
-recognizers and attach it to your view.
+recognizers and attach it to your view. You can now use any gesture recognizer of your choosing, but it should be a continuous tracking gesture rather than discrete actions.
 
 ```
 	OBDragDropManager *dragDropManager = [OBDragDropManager sharedManager];
+
+	// Drag and drop using long press
 	UILongPressGestureRecognizer *dragDropRecognizer = [dragDropManager createLongPressDragDropGestureRecognizerWithSource:self];
 	[view addGestureRecognizer:dragDropRecognizer];
+
+	// Drag and drop using pan
+	UIGestureRecognizer *panRecognizer = [dragDropManager createDragDropGestureRecognizerWithClass:[UIPanGestureRecognizer class] source:self];
+	[view addGestureRecognizer:panRecognizer];
 ```
 
 

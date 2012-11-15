@@ -8,6 +8,7 @@
 
 #import "OBDragDropManager.h"
 #import "UIView+OBDropZone.h"
+#import "UIGestureRecognizer+OBDragDrop.h"
 #import "OBLongPressDragDropGestureRecognizer.h"
 
 
@@ -246,14 +247,23 @@
 
 -(OBLongPressDragDropGestureRecognizer*) createLongPressDragDropGestureRecognizerWithSource:(id<OBOvumSource>)source
 {
-  OBLongPressDragDropGestureRecognizer *recognizer = [[[OBLongPressDragDropGestureRecognizer alloc] init] autorelease];
-  recognizer.ovumSource = source;
-  [recognizer addTarget:self action:@selector(ovumSourceLongPressed:)];
-  return recognizer;
+  return (OBLongPressDragDropGestureRecognizer *)[self createDragDropGestureRecognizerWithClass:[OBLongPressDragDropGestureRecognizer class] source:source];
 }
 
 
--(void) ovumSourceLongPressed:(OBLongPressDragDropGestureRecognizer*)recognizer
+-(UIGestureRecognizer *) createDragDropGestureRecognizerWithClass:(Class)recognizerClass source:(id<OBOvumSource>)source
+{
+  if ([recognizerClass isSubclassOfClass:[UIGestureRecognizer class]])
+  {
+    UIGestureRecognizer *recognizer = [[[recognizerClass alloc] initWithTarget:self action:@selector(handleOvumGesture:)] autorelease];
+    recognizer.ovumSource = source;
+    return recognizer;
+  }
+  return nil;
+}
+
+
+-(void) handleOvumGesture:(UIGestureRecognizer <OBDragDropGestureRecognizer>*)recognizer
 {
   UIWindow *hostWindow = recognizer.view.window;
   CGPoint locationInHostWindow = [recognizer locationInView:hostWindow];
