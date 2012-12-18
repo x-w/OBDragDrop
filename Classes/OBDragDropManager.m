@@ -269,6 +269,7 @@
 
     recognizer.ovum = [ovumSource createOvumFromView:sourceView];
     recognizer.ovum.source = ovumSource;
+    recognizer.ovum.currentDropHandlingView = sourceView;
 
     if ([ovumSource respondsToSelector:@selector(createDragRepresentationOfSourceView:inWindow:)])
     {
