@@ -24,13 +24,18 @@
 @synthesize dragViewInitialCenter;
 
 @synthesize isCentered;
+@synthesize shouldScale;
+
 @synthesize offsetOvumAndTouch;
+@synthesize shiftPinchCentroid;
+@synthesize scale;
 
 - (id)init
 {
   self = [super init];
   if (self) {
     self.isCentered = YES;
+    self.shouldScale = NO;
   }
   return self;
 }
@@ -55,6 +60,7 @@
 
 -(void) handleApplicationOrientationChange:(NSNotification*)notification;
 -(void) cleanupOvum:(OBOvum*)ovum;
+-(CGFloat) distanceFrom:(CGPoint)point1 to:(CGPoint)point2;
 
 @end
 
@@ -138,6 +144,7 @@
   self.overlayWindow = [[[UIWindow alloc] initWithFrame:mainWindow.frame] autorelease];
   self.overlayWindow.windowLevel = UIWindowLevelAlert;
   self.overlayWindow.hidden = YES;
+  self.overlayWindow.userInteractionEnabled = NO;
   self.overlayWindow.transform = [self transformForOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
 }
 
@@ -306,6 +313,19 @@
       offset.y = locationInOverlayWindow.y - dragView.center.y;
       recognizer.ovum.offsetOvumAndTouch = offset;
     }
+    
+    if (recognizer.ovum.shouldScale)
+    {
+      recognizer.ovum.shiftPinchCentroid = CGPointMake(0, 0);
+      prevPinchCentroid = locationInOverlayWindow;
+      prevNumberOfTouches = recognizer.numberOfTouches;
+      initialFrame = dragView.frame;
+      
+      CGPoint firstTouchLocation = [recognizer locationOfTouch:0 inView:hostWindow];
+      initialDistance = [self distanceFrom:locationInHostWindow to:firstTouchLocation]; // = 0 on 1-finger gesture.
+    }
+    
+    recognizer.ovum.scale = 1.0;
 
     // Give the ovum source a change to manipulate or animate the drag view
     if ([ovumSource respondsToSelector:@selector(dragViewWillAppear:inWindow:atLocation:)])
@@ -322,17 +342,66 @@
     OBOvum *ovum = recognizer.ovum;
     UIView *dragView = ovum.dragView;
 
-    if (recognizer.ovum.isCentered)
+    // New center point for drag view without any modification because of the scale of initial offsets between touch and drag view center.
+    CGPoint newCenter = locationInOverlayWindow;
+    
+    if (!recognizer.ovum.isCentered)
     {
-      dragView.center = locationInOverlayWindow;
+      // If chosen apply initial offset to the new location.
+      newCenter.x = newCenter.x - recognizer.ovum.offsetOvumAndTouch.x * recognizer.ovum.scale;
+      newCenter.y = newCenter.y - recognizer.ovum.offsetOvumAndTouch.y * recognizer.ovum.scale;
     }
-    else
+    
+    if (recognizer.ovum.shouldScale)
     {
-      CGPoint newCenter;
-      newCenter.x = locationInOverlayWindow.x - recognizer.ovum.offsetOvumAndTouch.x;
-      newCenter.y = locationInOverlayWindow.y - recognizer.ovum.offsetOvumAndTouch.y;
-      dragView.center = newCenter;
+      // This is the average location of the location of all touches in the gesture.
+      CGPoint newCentroid = locationInOverlayWindow;
+      NSUInteger numberOfTouches = recognizer.numberOfTouches;
+      
+      // If number of touches changes we need to recalculate the shift between the last
+      // gesture centroid and the new gesture one to avoid the image being recentered.
+      if (prevNumberOfTouches != numberOfTouches)
+      {
+        recognizer.ovum.shiftPinchCentroid = CGPointMake(prevPinchCentroid.x - newCentroid.x + recognizer.ovum.shiftPinchCentroid.x * recognizer.ovum.scale,
+                                                         prevPinchCentroid.y - newCentroid.y + recognizer.ovum.shiftPinchCentroid.y * recognizer.ovum.scale);
+        recognizer.ovum.offsetOvumAndTouch = CGPointMake(recognizer.ovum.offsetOvumAndTouch.x * recognizer.ovum.scale,
+                                                         recognizer.ovum.offsetOvumAndTouch.y * recognizer.ovum.scale);
+        
+        if (numberOfTouches == 1)
+        { // If the gestures continues with one finger all the scale variables are reseted.
+          initialDistance = 0;
+          initialFrame = dragView.frame;
+          recognizer.ovum.scale = 1.0;
+        }
+      }
+      
+      // And update the current state for the next iteration check
+      prevPinchCentroid = newCentroid;
+      prevNumberOfTouches = numberOfTouches;
+            
+      // This is the transformation for rescaling the image and it needs two fingers at least.
+      if (numberOfTouches > 1)
+      {
+        CGPoint firstTouchLocation = [recognizer locationOfTouch:0 inView:overlayWindow];
+        CGFloat newDistance = [self distanceFrom:newCentroid to:firstTouchLocation];
+        
+        if (initialDistance == 0)
+          initialDistance = newDistance;
+        
+        CGFloat aScale = newDistance / initialDistance;
+        recognizer.ovum.scale = aScale;
+        
+        CGAffineTransform transform = CGAffineTransformIdentity;
+        transform = CGAffineTransformScale(transform, recognizer.ovum.scale, recognizer.ovum.scale);
+        dragView.frame = CGRectApplyAffineTransform(initialFrame, transform);
+      }
+      
+      // And finally recentered depending on the shifting touch and the original offset.
+      newCenter.x = newCenter.x + recognizer.ovum.shiftPinchCentroid.x * recognizer.ovum.scale;
+      newCenter.y = newCenter.y + recognizer.ovum.shiftPinchCentroid.y * recognizer.ovum.scale;
     }
+    
+    dragView.center = newCenter;
 
     [self handleOvumMove:ovum inWindow:hostWindow atLocation:locationInHostWindow];
 
@@ -354,17 +423,21 @@
       UIView *handlingView = [self findDropZoneHandlerInWindow:hostWindow atLocation:locationInHostWindow];
       CGPoint locationInView = [hostWindow convertPoint:locationInHostWindow toView:handlingView];
 
-      if (recognizer.ovum.isCentered)
+      CGPoint newCenter = locationInView;
+      
+      if (!recognizer.ovum.isCentered)
       {
-        [dropZone ovumDropped:ovum inView:handlingView atLocation:locationInView];
+        newCenter.x = newCenter.x - recognizer.ovum.offsetOvumAndTouch.x * recognizer.ovum.scale;
+        newCenter.y = newCenter.y - recognizer.ovum.offsetOvumAndTouch.y * recognizer.ovum.scale;
       }
-      else
+
+      if (recognizer.ovum.shouldScale)
       {
-        CGPoint newCenter;
-        newCenter.x = locationInView.x - recognizer.ovum.offsetOvumAndTouch.x;
-        newCenter.y = locationInView.y - recognizer.ovum.offsetOvumAndTouch.y;
-        [dropZone ovumDropped:ovum inView:handlingView atLocation:newCenter];
+        newCenter.x = newCenter.x + recognizer.ovum.shiftPinchCentroid.x * recognizer.ovum.scale;
+        newCenter.y = newCenter.y + recognizer.ovum.shiftPinchCentroid.y * recognizer.ovum.scale;
       }
+      
+      [dropZone ovumDropped:ovum inView:handlingView atLocation:newCenter];
 
       // For use in blocks below
       UIView *dragView = ovum.dragView;
@@ -440,6 +513,14 @@
 
   ovum.dragView = nil;
   ovum.currentDropHandlingView = nil;
+}
+
+
+-(CGFloat) distanceFrom:(CGPoint)point1 to:(CGPoint)point2
+{
+  CGFloat xDist = (point2.x - point1.x);
+  CGFloat yDist = (point2.y - point1.y);
+  return sqrt((xDist * xDist) + (yDist * yDist));
 }
 
 @end

@@ -36,7 +36,7 @@
   CGPoint dragViewInitialCenter;
   
   BOOL isCentered;
-  CGPoint offsetOvumAndTouch;
+  BOOL shouldScale;
 }
 @property (nonatomic, assign) id<OBOvumSource> source;
 @property (nonatomic, retain) id dataObject;
@@ -48,7 +48,11 @@
 @property (nonatomic, retain) UIView *dragView;
 @property (nonatomic, assign) CGPoint dragViewInitialCenter;
 @property (nonatomic, assign) BOOL isCentered;
+@property (nonatomic, assign) BOOL shouldScale;
+
 @property (nonatomic, assign) CGPoint offsetOvumAndTouch;
+@property (nonatomic, assign) CGPoint shiftPinchCentroid;
+@property (nonatomic, assign) CGFloat scale;
 
 @end
 
@@ -56,6 +60,10 @@
 
 @interface OBDragDropManager : NSObject <UIGestureRecognizerDelegate>
 {
+  NSInteger prevNumberOfTouches;
+  CGPoint prevPinchCentroid;
+  CGFloat initialDistance;
+  CGRect initialFrame;
 }
 
 @property (nonatomic, retain) UIWindow *overlayWindow;
