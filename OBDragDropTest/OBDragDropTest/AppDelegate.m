@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 
 #import "ViewController.h"
-#import "OBDragDropManager.h"
+#import "OBDragDrop.h"
 
 @implementation AppDelegate
 

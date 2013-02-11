@@ -48,6 +48,7 @@
 		3968602115B864B0009C3D7B /* OBLongPressDragDropGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OBLongPressDragDropGestureRecognizer.m; path = ../../Classes/OBLongPressDragDropGestureRecognizer.m; sourceTree = "<group>"; };
 		3968602215B864B0009C3D7B /* UIView+OBDropZone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+OBDropZone.h"; path = "../../Classes/UIView+OBDropZone.h"; sourceTree = "<group>"; };
 		3968602315B864B0009C3D7B /* UIView+OBDropZone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+OBDropZone.m"; path = "../../Classes/UIView+OBDropZone.m"; sourceTree = "<group>"; };
+		39F0AAC316C8FB3B008B6482 /* OBDragDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OBDragDrop.h; path = ../../Classes/OBDragDrop.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +123,7 @@
 		3968601B15B864A3009C3D7B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				39F0AAC316C8FB3B008B6482 /* OBDragDrop.h */,
 				3968601D15B864B0009C3D7B /* OBDragDropManager.h */,
 				3968601E15B864B0009C3D7B /* OBDragDropManager.m */,
 				3968601F15B864B0009C3D7B /* OBDragDropProtocol.h */,

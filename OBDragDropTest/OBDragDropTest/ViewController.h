@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OBDragDropManager.h"
+#import "OBDragDrop.h"
 
 
 @interface ViewController : UIViewController <OBOvumSource, OBDropZone>
