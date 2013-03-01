@@ -471,11 +471,11 @@
 
     [self cleanupOvum:ovum];
 
-    // Reset the ovum recognizer
-    recognizer.ovum = nil;
-
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:recognizer.ovum, OBOvumDictionaryKey, nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:OBDragDropManagerDidEndDragNotification object:self userInfo:userInfo];
+    
+    // Reset the ovum recognizer
+    recognizer.ovum = nil;
   }
   else if (recognizer.state == UIGestureRecognizerStateCancelled ||
            recognizer.state == UIGestureRecognizerStateEnded)
@@ -493,11 +493,11 @@
 
     [self cleanupOvum:ovum];
 
-    // Reset the ovum recognizer
-    recognizer.ovum = nil;
-
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:recognizer.ovum, OBOvumDictionaryKey, nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:OBDragDropManagerDidEndDragNotification object:self userInfo:userInfo];
+    
+    // Reset the ovum recognizer
+    recognizer.ovum = nil;
   }
 }
 
