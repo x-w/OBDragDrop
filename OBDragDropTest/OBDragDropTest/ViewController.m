@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-static NSInteger kItemViewIndexStart = 100;
+static NSInteger kItemViewIndex = 100;
 
 
 @implementation ViewController
@@ -45,6 +45,17 @@ static NSInteger kItemViewIndexStart = 100;
 }
 
 
+-(UIView *) createItemView
+{
+  static CGFloat (^randFloat)(CGFloat, CGFloat) = ^(CGFloat min, CGFloat max) { return min + (max-min) * (CGFloat)random() / RAND_MAX; };
+  UIView *itemView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+  itemView.backgroundColor = [UIColor colorWithHue:randFloat(0.0, 1.0) saturation:randFloat(0.5, 1.0) brightness:randFloat(0.3, 1.0) alpha:1.0];
+  itemView.tag = kItemViewIndex++;
+  return itemView;
+}
+
+
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -53,6 +64,10 @@ static NSInteger kItemViewIndexStart = 100;
 	// Do any additional setup after loading the view, typically from a nib.
   
   self.view.backgroundColor = [UIColor blackColor];
+  
+  
+  UIBarButtonItem *popoverItem = [[[UIBarButtonItem alloc] initWithTitle:@"More Items" style:UIBarButtonItemStyleBordered target:self action:@selector(showMoreItems:)] autorelease];
+  self.navigationItem.leftBarButtonItem = popoverItem;
   
   
   OBDragDropManager *dragDropManager = [OBDragDropManager sharedManager];
@@ -81,10 +96,7 @@ static NSInteger kItemViewIndexStart = 100;
   
   for (NSInteger i=0; i<10; i++)
   {
-    UIView *itemView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
-    CGFloat (^randFloat)(CGFloat, CGFloat) = ^(CGFloat min, CGFloat max) { return min + (max-min) * (CGFloat)random() / RAND_MAX; };
-    itemView.backgroundColor = [UIColor colorWithHue:randFloat(0.0, 1.0) saturation:randFloat(0.5, 1.0) brightness:randFloat(0.3, 1.0) alpha:1.0];
-    itemView.tag = kItemViewIndexStart + i;
+    UIView *itemView = [self createItemView];
     [leftViewContents addObject:itemView];
     [leftView addSubview:itemView];
     
@@ -102,30 +114,26 @@ static NSInteger kItemViewIndexStart = 100;
 
 - (void)viewDidUnload
 {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+  [super viewDidUnload];
+
+  [additionalSourcesViewController release];
+  additionalSourcesViewController = nil;
 }
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+  [super viewWillAppear:animated];
+  
+  
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 	[super viewWillDisappear:animated];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
-}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -295,15 +303,28 @@ static NSInteger kLabelTag = 2323;
       [itemView release];
     }
   }
+  else if ([ovum.dataObject isKindOfClass:[UIColor class]])
+  {
+    // An item from AdditionalSourcesViewController
+    UIView *itemView = [self createItemView];
+    itemView.backgroundColor = ovum.dataObject;
+    NSInteger insertionIndex = rightViewContents.count;
+    [rightView insertSubview:itemView atIndex:insertionIndex];
+    [rightViewContents insertObject:itemView atIndex:insertionIndex];
+  }
 }
 
 
 -(void) handleDropAnimationForOvum:(OBOvum*)ovum withDragView:(UIView*)dragView dragDropManager:(OBDragDropManager*)dragDropManager
 {
+  UIView *itemView = nil;
   if ([ovum.dataObject isKindOfClass:[NSNumber class]])
+    itemView = [self.view viewWithTag:[ovum.dataObject integerValue]];
+  else if ([ovum.dataObject isKindOfClass:[UIColor class]])
+    itemView = [rightViewContents lastObject];
+  
+  if (itemView)
   {
-    UIView *itemView = [self.view viewWithTag:[ovum.dataObject integerValue]];
-    
     // Set the initial position of the view to match that of the drag view
     CGRect dragViewFrameInTargetWindow = [ovum.dragView.window convertRect:dragView.frame toWindow:rightView.window];
     dragViewFrameInTargetWindow = [rightView convertRect:dragViewFrameInTargetWindow fromView:rightView.window];
@@ -322,5 +343,44 @@ static NSInteger kLabelTag = 2323;
   }
 }
 
+
+-(IBAction) showMoreItems:(id)sender
+{
+  if (additionalSourcesViewController == nil)
+  {
+    additionalSourcesViewController = [[AdditionalSourcesViewController alloc] initWithNibName:nil bundle:nil];
+  }
+  
+  if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    additionalSourcesViewController.contentSizeForViewInPopover = CGSizeMake(320, 480);
+    sourcesPopoverController = [[UIPopoverController alloc] initWithContentViewController:additionalSourcesViewController];
+    sourcesPopoverController.delegate = self;
+    [sourcesPopoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    sourcesPopoverController.passthroughViews = nil;
+  }
+  else {
+    // iPhone case
+    if (additionalSourcesViewController.view.superview != self.view)
+    {
+      additionalSourcesViewController.view.alpha = 0.0;
+      additionalSourcesViewController.view.frame = self.view.bounds;
+      [self.view addSubview:additionalSourcesViewController.view];
+    }
+    
+    [UIView animateWithDuration:0.2 animations:^{
+      additionalSourcesViewController.view.alpha = 1.0;
+    }];
+  }
+}
+
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+  if (popoverController == sourcesPopoverController)
+  {
+    [sourcesPopoverController release];
+    sourcesPopoverController = nil;
+  }
+}
 
 @end

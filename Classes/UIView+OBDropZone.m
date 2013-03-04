@@ -31,4 +31,19 @@ static NSString *kDropZoneHandlerKey = @"DropZoneHandlerKey";
                             );
 }
 
+
+-(BOOL) hasParentView:(UIView*)parentView
+{
+  UIView *superview = [self superview];
+  if (superview)
+  {
+    if (superview == parentView)
+      return YES;
+    else
+      return [superview hasParentView:parentView];
+  }
+  
+  return NO;
+}
+
 @end

@@ -15,4 +15,6 @@
 // Adds the ability for a UIView to forward drag/drop
 @property (nonatomic, assign) id<OBDropZone> dropZoneHandler;
 
+-(BOOL) hasParentView:(UIView*)parentView;
+
 @end

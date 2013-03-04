@@ -165,16 +165,38 @@
 }
 
 
+-(UIView *) findDropZoneHandlerInView:(UIView*)view atLocation:(CGPoint)locationInView
+{
+  UIView *furthestView = [view hitTest:locationInView withEvent:nil];
+  if (!furthestView)
+  {
+    DLog(@"OBDragDropManager findDropZoneHandlerInView: Furthest view is nil!");
+    return nil;
+  }
+  
+  UIView *handlingView = [self findDropTargetHandler:furthestView];
+  return handlingView;
+}
+
+
 -(UIView *) findDropZoneHandlerInWindow:(UIWindow*)window atLocation:(CGPoint)locationInWindow
 {
   UIView *furthestView = [window hitTest:locationInWindow withEvent:nil];
-  if (!furthestView)
-  {
-    DLog(@"OBDragDropManager findDropZoneHandlerInWindow: Furthest view is nil!");
-    return nil;
-  }
-
   UIView *handlingView = [self findDropTargetHandler:furthestView];
+  if (handlingView)
+    return handlingView;
+  
+  // Use the UIWindow's rootViewController if its available.
+  // This allows for the usecase of dragging from a UIPopover to a view below, since UIPopover
+  // uses the same window and places sibling views above the normal contents, using
+  // the rootViewController's view is a method of getting to the user content of the window
+  if (window.rootViewController && ![furthestView hasParentView:window.rootViewController.view])
+  {
+    UIView *containerView = window.rootViewController.view;
+    CGPoint locationInContainerView = [containerView convertPoint:locationInWindow fromView:window];
+    handlingView = [self findDropZoneHandlerInView:containerView atLocation:locationInContainerView];
+  }
+  
   return handlingView;
 }
 
