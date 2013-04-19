@@ -545,4 +545,66 @@
   return sqrt((xDist * xDist) + (yDist * yDist));
 }
 
+#pragma mark - Ovum External Updates
+
+-(void) updateOvum:(OBOvum *)ovum withZoom:(CGFloat)zoom
+{
+  if (!ovum)
+    return;
+  
+  // Apply external zoom to different offsets
+  if (!ovum.isCentered)
+  {
+    CGPoint offset = [ovum offsetOvumAndTouch];
+    offset.x *= zoom;
+    offset.y *= zoom;
+    [ovum setOffsetOvumAndTouch:offset];
+  }
+  
+  if (ovum.shouldScale)
+  {
+    CGPoint offset = [ovum shiftPinchCentroid];
+    offset.x *= zoom;
+    offset.y *= zoom;
+    [ovum setShiftPinchCentroid:offset];    
+  }
+  
+  // Then recalculate the new center of the drag view using the 
+  // current (or very last) location and the just scaled offset
+  CGPoint newCenter = currentLocationInOverlayWindow;
+  
+  if (!ovum.isCentered)
+  {
+    newCenter.x = newCenter.x - ovum.offsetOvumAndTouch.x * ovum.scale;
+    newCenter.y = newCenter.y - ovum.offsetOvumAndTouch.y * ovum.scale;
+  }
+  
+  if (ovum.shouldScale)
+  {
+    newCenter.x = newCenter.x + ovum.shiftPinchCentroid.x * ovum.scale;
+    newCenter.y = newCenter.y + ovum.shiftPinchCentroid.y * ovum.scale;
+  }
+  
+  // Finally apply to the ovum's dragged view the zoom on its size and
+  // using the new values, find its new origin. 
+  UIView *draggedView = ovum.dragView;
+  CGRect frame = draggedView.frame;
+
+  frame.size.height *= zoom;
+  frame.size.width *= zoom;
+  
+  frame.origin.x = newCenter.x - frame.size.width / 2.0;
+  frame.origin.y = newCenter.y - frame.size.height / 2.0;
+  
+  [draggedView setFrame:frame];
+  
+  // Simulate a ovumMoved on the last drop zone to update that area, in case its needed.  
+  id<OBDropZone> dropZone = ovum.currentDropHandlingView.dropZoneHandler;
+  if ([dropZone respondsToSelector:@selector(ovumMoved:inView:atLocation:)])
+  {
+    CGPoint locationInView = [overlayWindow convertPoint:currentLocationInOverlayWindow toView:ovum.currentDropHandlingView];
+    ovum.dropAction = [dropZone ovumMoved:ovum inView:ovum.currentDropHandlingView atLocation:locationInView];
+  }
+}
+
 @end
