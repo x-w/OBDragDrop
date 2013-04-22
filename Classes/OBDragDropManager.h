@@ -85,5 +85,7 @@
 
 -(void) animateOvumDrop:(OBOvum*)ovum withAnimation:(void (^)()) dropAnimation completion:(void (^)(BOOL completed))completion;
 
+-(void) updateOvum:(OBOvum *)ovum withZoom:(CGFloat)zoom;
+
 @end
 
