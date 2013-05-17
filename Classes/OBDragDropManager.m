@@ -42,8 +42,6 @@
 
 -(void) dealloc
 {
-  DLog(@"%@ dealloc", [self class]);
-
   self.dataObject = nil;
   self.tag = nil;
   self.source = nil;
@@ -170,7 +168,6 @@
   UIView *furthestView = [view hitTest:locationInView withEvent:nil];
   if (!furthestView)
   {
-    DLog(@"OBDragDropManager findDropZoneHandlerInView: Furthest view is nil!");
     return nil;
   }
   
