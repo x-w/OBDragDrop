@@ -304,6 +304,9 @@
     id<OBOvumSource> ovumSource = recognizer.ovumSource;
 
     recognizer.ovum = [ovumSource createOvumFromView:sourceView];
+    if (recognizer.ovum == nil) { // the source said this shouldn't be dragged at this moment
+        return;
+    }
     recognizer.ovum.source = ovumSource;
     recognizer.ovum.currentDropHandlingView = sourceView;
 
