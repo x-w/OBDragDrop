@@ -20,6 +20,7 @@
 		3968602515B864B0009C3D7B /* OBLongPressDragDropGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3968602115B864B0009C3D7B /* OBLongPressDragDropGestureRecognizer.m */; };
 		3968602615B864B0009C3D7B /* UIView+OBDropZone.m in Sources */ = {isa = PBXBuildFile; fileRef = 3968602315B864B0009C3D7B /* UIView+OBDropZone.m */; };
 		397E048716DB7C1E00DC9715 /* AdditionalSourcesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 397E048616DB7C1E00DC9715 /* AdditionalSourcesViewController.m */; };
+		F302486C17AC224D00346CE9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F302486B17AC224D00346CE9 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		397E048516DB7C1E00DC9715 /* AdditionalSourcesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdditionalSourcesViewController.h; sourceTree = "<group>"; };
 		397E048616DB7C1E00DC9715 /* AdditionalSourcesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdditionalSourcesViewController.m; sourceTree = "<group>"; };
 		39F0AAC316C8FB3B008B6482 /* OBDragDrop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OBDragDrop.h; path = ../../Classes/OBDragDrop.h; sourceTree = "<group>"; };
+		F302486B17AC224D00346CE9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 		390E610D14F6CB8100F8FA74 = {
 			isa = PBXGroup;
 			children = (
+				F302486B17AC224D00346CE9 /* Default-568h@2x.png */,
 				390E612214F6CB8100F8FA74 /* OBDragDropTest */,
 				390E611B14F6CB8100F8FA74 /* Frameworks */,
 				390E611914F6CB8100F8FA74 /* Products */,
@@ -188,6 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				390E612714F6CB8100F8FA74 /* InfoPlist.strings in Resources */,
+				F302486C17AC224D00346CE9 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,7 +246,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -260,7 +264,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -271,10 +275,13 @@
 		390E613A14F6CB8200F8FA74 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OBDragDropTest/OBDragDropTest-Prefix.pch";
 				INFOPLIST_FILE = "OBDragDropTest/OBDragDropTest-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -282,10 +289,13 @@
 		390E613B14F6CB8200F8FA74 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OBDragDropTest/OBDragDropTest-Prefix.pch";
 				INFOPLIST_FILE = "OBDragDropTest/OBDragDropTest-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -18,7 +18,7 @@ static NSString *kOBGestureRecognizerOvumSourceKey = @"OBGestureRecognizerOvumSo
 
 -(OBOvum *) ovum
 {
-  OBOvum *ovum = (OBOvum *) objc_getAssociatedObject(self, kOBGestureRecognizerOvumKey);
+  OBOvum *ovum = (OBOvum *) objc_getAssociatedObject(self, CFBridgingRetain(kOBGestureRecognizerOvumKey));
   return ovum;
 }
 
@@ -26,7 +26,7 @@ static NSString *kOBGestureRecognizerOvumSourceKey = @"OBGestureRecognizerOvumSo
 -(void) setOvum:(OBOvum *)ovum
 {
   objc_setAssociatedObject (self,
-                            kOBGestureRecognizerOvumKey,
+                            CFBridgingRetain(kOBGestureRecognizerOvumKey),
                             ovum,
                             OBJC_ASSOCIATION_RETAIN
                             );
@@ -35,7 +35,7 @@ static NSString *kOBGestureRecognizerOvumSourceKey = @"OBGestureRecognizerOvumSo
 
 -(id<OBOvumSource>) ovumSource
 {
-  id<OBOvumSource> handler = (id<OBOvumSource>) objc_getAssociatedObject(self, kOBGestureRecognizerOvumSourceKey);
+  id<OBOvumSource> handler = (id<OBOvumSource>) objc_getAssociatedObject(self, CFBridgingRetain(kOBGestureRecognizerOvumSourceKey));
   return handler;
 }
 
@@ -43,7 +43,7 @@ static NSString *kOBGestureRecognizerOvumSourceKey = @"OBGestureRecognizerOvumSo
 -(void) setOvumSource:(id<OBOvumSource>)ovumSource
 {
   objc_setAssociatedObject (self,
-                            kOBGestureRecognizerOvumSourceKey,
+                            CFBridgingRetain(kOBGestureRecognizerOvumSourceKey),
                             ovumSource,
                             OBJC_ASSOCIATION_ASSIGN
                             );

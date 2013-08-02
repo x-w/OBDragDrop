@@ -24,13 +24,13 @@
 @interface OBOvum : NSObject 
 {
 @private
-  id<OBOvumSource> source;
+  id<OBOvumSource> __weak source;
   id dataObject;
   NSString *tag;
   
   // Current drop action and target
   OBDropAction dropAction;
-  UIView *currentDropHandlingView;
+  UIView *__weak currentDropHandlingView;
   
   UIView *dragView; // View to represent the dragged object
   CGPoint dragViewInitialCenter;
@@ -38,14 +38,14 @@
   BOOL isCentered;
   BOOL shouldScale;
 }
-@property (nonatomic, assign) id<OBOvumSource> source;
-@property (nonatomic, retain) id dataObject;
-@property (nonatomic, retain) NSString *tag;
+@property (nonatomic, weak) id<OBOvumSource> source;
+@property (nonatomic, strong) id dataObject;
+@property (nonatomic, strong) NSString *tag;
 @property (nonatomic, assign) OBDropAction dropAction;
 
 // The drop target that the ovum is currenly over
-@property (nonatomic, assign) UIView *currentDropHandlingView;
-@property (nonatomic, retain) UIView *dragView;
+@property (nonatomic, weak) UIView *currentDropHandlingView;
+@property (nonatomic, strong) UIView *dragView;
 @property (nonatomic, assign) CGPoint dragViewInitialCenter;
 @property (nonatomic, assign) BOOL isCentered;
 @property (nonatomic, assign) BOOL shouldScale;
@@ -66,7 +66,7 @@
   CGRect initialFrame;
 }
 
-@property (nonatomic, retain) UIWindow *overlayWindow;
+@property (nonatomic, strong) UIWindow *overlayWindow;
 @property (nonatomic, assign) CGPoint currentLocationInHostWindow;
 @property (nonatomic, assign) CGPoint currentLocationInOverlayWindow;
 
