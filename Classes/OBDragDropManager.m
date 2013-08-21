@@ -340,8 +340,14 @@
       prevNumberOfTouches = recognizer.numberOfTouches;
       initialFrame = dragView.frame;
       
-      CGPoint firstTouchLocation = [recognizer locationOfTouch:0 inView:hostWindow];
-      initialDistance = [self distanceFrom:locationInHostWindow to:firstTouchLocation]; // = 0 on 1-finger gesture.
+      // Noticed in some cases on iOS 7 beta 6 that using index 0 will cause a crash
+      // even though the gesture has 'began' ... smells like a bug
+      // '-[UIPanGestureRecognizer locationOfTouch:inView:]: index (0) beyond bounds (0).'
+      if (recognizer.numberOfTouches > 0)
+      {
+        CGPoint firstTouchLocation = [recognizer locationOfTouch:0 inView:hostWindow];
+        initialDistance = [self distanceFrom:locationInHostWindow to:firstTouchLocation]; // = 0 on 1-finger gesture.
+      }
     }
     
     recognizer.ovum.scale = 1.0;
