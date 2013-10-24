@@ -18,7 +18,7 @@
 
 -(void) loadView
 {
-  self.view = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)] autorelease];
+  self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
 }
 
 - (void)viewDidLoad
@@ -28,7 +28,7 @@
   OBDragDropManager *dragDropManager = [OBDragDropManager sharedManager];
   
   CGRect viewFrame = CGRectInset(self.view.frame, 12.0, 12.0);
-  UIScrollView *sourcesView = [[[UIScrollView alloc] initWithFrame:viewFrame] autorelease];
+  UIScrollView *sourcesView = [[UIScrollView alloc] initWithFrame:viewFrame];
   sourcesView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
   sourcesView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
   [self.view addSubview:sourcesView];
@@ -44,7 +44,7 @@
   for (NSInteger i=0; i<10; i++)
   {
     CGRect frame = CGRectMake(margin.width, y, itemWidth, itemHeight);
-    UIView *itemView = [[[UIView alloc] initWithFrame:frame] autorelease];
+    UIView *itemView = [[UIView alloc] initWithFrame:frame];
     itemView.backgroundColor = [UIColor colorWithHue:randFloat(0.0, 1.0) saturation:randFloat(0.5, 1.0) brightness:randFloat(0.3, 1.0) alpha:1.0];
     [sourcesView addSubview:itemView];
     
@@ -66,7 +66,7 @@
 
 -(OBOvum *) createOvumFromView:(UIView*)sourceView
 {
-  OBOvum *ovum = [[[OBOvum alloc] init] autorelease];
+  OBOvum *ovum = [[OBOvum alloc] init];
   ovum.dataObject = sourceView.backgroundColor;
   return ovum;
 }
@@ -77,7 +77,7 @@
   CGRect frame = [sourceView convertRect:sourceView.bounds toView:sourceView.window];
   frame = [window convertRect:frame fromWindow:sourceView.window];
   
-  UIView *dragView = [[[UIView alloc] initWithFrame:frame] autorelease];
+  UIView *dragView = [[UIView alloc] initWithFrame:frame];
   dragView.backgroundColor = sourceView.backgroundColor;
   dragView.layer.cornerRadius = 5.0;
   dragView.layer.borderColor = [UIColor colorWithWhite:0.0 alpha:1.0].CGColor;

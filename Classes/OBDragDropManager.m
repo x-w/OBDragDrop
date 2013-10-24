@@ -42,12 +42,8 @@
 
 -(void) dealloc
 {
-  self.dataObject = nil;
-  self.tag = nil;
   self.source = nil;
-  self.dragView = nil;
 
-  [super dealloc];
 }
 
 @end
@@ -86,7 +82,7 @@
   self = [super init];
   if (self)
   {
-    __block id __self = self;
+    __weak id __self = self;
     [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidChangeStatusBarOrientationNotification
                                                       object:[UIApplication sharedApplication]
                                                        queue:[NSOperationQueue mainQueue]
@@ -102,7 +98,6 @@
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidChangeStatusBarOrientationNotification object:[UIApplication sharedApplication]];
 
-  [super dealloc];
 }
 
 
@@ -139,7 +134,7 @@
     self.overlayWindow = nil;
   }
 
-  self.overlayWindow = [[[UIWindow alloc] initWithFrame:mainWindow.frame] autorelease];
+  self.overlayWindow = [[UIWindow alloc] initWithFrame:mainWindow.frame];
   self.overlayWindow.windowLevel = UIWindowLevelAlert;
   self.overlayWindow.hidden = YES;
   self.overlayWindow.userInteractionEnabled = NO;
@@ -281,7 +276,7 @@
 {
   if ([recognizerClass isSubclassOfClass:[UIGestureRecognizer class]])
   {
-    UIGestureRecognizer *recognizer = [[[recognizerClass alloc] initWithTarget:self action:@selector(handleOvumGesture:)] autorelease];
+    UIGestureRecognizer *recognizer = [[recognizerClass alloc] initWithTarget:self action:@selector(handleOvumGesture:)];
     recognizer.ovumSource = source;
     return recognizer;
   }
@@ -291,6 +286,11 @@
 
 -(void) handleOvumGesture:(UIGestureRecognizer <OBDragDropGestureRecognizer>*)recognizer
 {
+    if (![self ovumRecognizerShouldHandleTouch:recognizer]) {
+        return;
+    }
+    
+    
   UIWindow *hostWindow = recognizer.view.window;
   CGPoint locationInHostWindow = [recognizer locationInView:hostWindow];
   CGPoint locationInOverlayWindow = [recognizer locationInView:overlayWindow];
@@ -315,7 +315,7 @@
     {
       CGRect frameInOriginalWindow = [sourceView convertRect:sourceView.bounds toView:sourceView.window];
       CGRect frameInOverlayWindow = [overlayWindow convertRect:frameInOriginalWindow fromWindow:sourceView.window];
-      dragView = [[[UIView alloc] initWithFrame:frameInOverlayWindow] autorelease];
+      dragView = [[UIView alloc] initWithFrame:frameInOverlayWindow];
       dragView.opaque = NO;
       dragView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.33];
     }
@@ -361,8 +361,7 @@
 
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:recognizer.ovum, OBOvumDictionaryKey, nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:OBDragDropManagerWillBeginDragNotification object:self userInfo:userInfo];
-  }
-  else if (recognizer.state == UIGestureRecognizerStateChanged)
+  } else if (recognizer.state == UIGestureRecognizerStateChanged)
   {
     OBOvum *ovum = recognizer.ovum;
     UIView *dragView = ovum.dragView;
@@ -524,6 +523,24 @@
     // Reset the ovum recognizer
     recognizer.ovum = nil;
   }
+}
+
+-(BOOL) ovumRecognizerShouldHandleTouch:(UIGestureRecognizer <OBDragDropGestureRecognizer>*)recognizer {
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        id<OBOvumSource> ovumSource = recognizer.ovumSource;
+        
+        if ([ovumSource respondsToSelector:@selector(shouldCreateOvumFromView:)] &&
+            ![ovumSource shouldCreateOvumFromView:recognizer.view])
+        {
+            // Workaround to cancel the gesture recognizer
+            recognizer.enabled = NO;
+            recognizer.enabled = YES;
+            return NO;
+        }
+        return YES;
+    }
+    
+    return recognizer.ovum != nil;
 }
 
 

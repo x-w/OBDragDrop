@@ -48,7 +48,7 @@ static NSInteger kItemViewIndex = 100;
 -(UIView *) createItemView
 {
   static CGFloat (^randFloat)(CGFloat, CGFloat) = ^(CGFloat min, CGFloat max) { return min + (max-min) * (CGFloat)random() / RAND_MAX; };
-  UIView *itemView = [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+  UIView *itemView = [[UIView alloc] initWithFrame:CGRectZero];
   itemView.backgroundColor = [UIColor colorWithHue:randFloat(0.0, 1.0) saturation:randFloat(0.5, 1.0) brightness:randFloat(0.3, 1.0) alpha:1.0];
   itemView.tag = kItemViewIndex++;
   return itemView;
@@ -66,7 +66,7 @@ static NSInteger kItemViewIndex = 100;
   self.view.backgroundColor = [UIColor blackColor];
   
   
-  UIBarButtonItem *popoverItem = [[[UIBarButtonItem alloc] initWithTitle:@"More Items" style:UIBarButtonItemStyleBordered target:self action:@selector(showMoreItems:)] autorelease];
+  UIBarButtonItem *popoverItem = [[UIBarButtonItem alloc] initWithTitle:@"More Items" style:UIBarButtonItemStyleBordered target:self action:@selector(showMoreItems:)];
   self.navigationItem.leftBarButtonItem = popoverItem;
   
   
@@ -75,7 +75,7 @@ static NSInteger kItemViewIndex = 100;
   CGRect viewFrame = self.view.frame;
   CGRect frame = CGRectMake(0, 0, viewFrame.size.width/2, viewFrame.size.height);
   frame = CGRectInset(frame, 20.0, 20.0);
-  leftView = [[[UIScrollView alloc] initWithFrame:frame] autorelease];
+  leftView = [[UIScrollView alloc] initWithFrame:frame];
   leftView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleRightMargin;
   leftView.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
   [self.view addSubview:leftView];
@@ -83,7 +83,7 @@ static NSInteger kItemViewIndex = 100;
   
   frame = CGRectMake(viewFrame.size.width/2, 0, viewFrame.size.width/2, viewFrame.size.height);
   frame = CGRectInset(frame, 20.0, 20.0);
-  rightView = [[[UIScrollView alloc] initWithFrame:frame] autorelease];
+  rightView = [[UIScrollView alloc] initWithFrame:frame];
   rightView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin;
   rightView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
   [self.view addSubview:rightView];
@@ -116,7 +116,6 @@ static NSInteger kItemViewIndex = 100;
 {
   [super viewDidUnload];
 
-  [additionalSourcesViewController release];
   additionalSourcesViewController = nil;
 }
 
@@ -174,7 +173,7 @@ static NSInteger kItemViewIndex = 100;
 
 -(OBOvum *) createOvumFromView:(UIView*)sourceView
 {
-  OBOvum *ovum = [[[OBOvum alloc] init] autorelease];
+  OBOvum *ovum = [[OBOvum alloc] init];
   ovum.dataObject = [NSNumber numberWithInteger:sourceView.tag];
   return ovum;
 }
@@ -185,7 +184,7 @@ static NSInteger kItemViewIndex = 100;
   CGRect frame = [sourceView convertRect:sourceView.bounds toView:sourceView.window];
   frame = [window convertRect:frame fromWindow:sourceView.window];
   
-  UIView *dragView = [[[UIView alloc] initWithFrame:frame] autorelease];
+  UIView *dragView = [[UIView alloc] initWithFrame:frame];
   dragView.backgroundColor = sourceView.backgroundColor;
   dragView.layer.cornerRadius = 5.0;
   dragView.layer.borderColor = [UIColor colorWithWhite:0.0 alpha:1.0].CGColor;
@@ -222,7 +221,7 @@ static NSInteger kLabelTag = 2323;
   view.layer.borderWidth = 5.0;
   
   CGRect labelFrame = CGRectMake(ovum.dragView.bounds.origin.x, ovum.dragView.bounds.origin.y, ovum.dragView.bounds.size.width, ovum.dragView.bounds.size.height / 2);
-  UILabel *label = [[[UILabel alloc] initWithFrame:labelFrame] autorelease];
+  UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
   label.text = @"Ovum entered";
   label.tag = kLabelTag;
   label.backgroundColor = [UIColor clearColor];
@@ -292,7 +291,6 @@ static NSInteger kLabelTag = 2323;
     UIView *itemView = [self.view viewWithTag:[ovum.dataObject integerValue]];
     if (itemView)
     {
-      [itemView retain];
       [itemView removeFromSuperview];
       [leftViewContents removeObject:itemView];
       
@@ -300,7 +298,6 @@ static NSInteger kLabelTag = 2323;
       [rightView insertSubview:itemView atIndex:insertionIndex];
       [rightViewContents insertObject:itemView atIndex:insertionIndex];
       
-      [itemView release];
     }
   }
   else if ([ovum.dataObject isKindOfClass:[UIColor class]])
@@ -378,7 +375,6 @@ static NSInteger kLabelTag = 2323;
 {
   if (popoverController == sourcesPopoverController)
   {
-    [sourcesPopoverController release];
     sourcesPopoverController = nil;
   }
 }
