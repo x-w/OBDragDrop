@@ -291,6 +291,11 @@
 
 -(void) handleOvumGesture:(UIGestureRecognizer <OBDragDropGestureRecognizer>*)recognizer
 {
+    if (![self ovumRecognizerShouldHandleTouch:recognizer]) {
+        return;
+    }
+    
+    
   UIWindow *hostWindow = recognizer.view.window;
   CGPoint locationInHostWindow = [recognizer locationInView:hostWindow];
   CGPoint locationInOverlayWindow = [recognizer locationInView:overlayWindow];
@@ -361,8 +366,7 @@
 
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:recognizer.ovum, OBOvumDictionaryKey, nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:OBDragDropManagerWillBeginDragNotification object:self userInfo:userInfo];
-  }
-  else if (recognizer.state == UIGestureRecognizerStateChanged)
+  } else if (recognizer.state == UIGestureRecognizerStateChanged)
   {
     OBOvum *ovum = recognizer.ovum;
     UIView *dragView = ovum.dragView;
@@ -524,6 +528,24 @@
     // Reset the ovum recognizer
     recognizer.ovum = nil;
   }
+}
+
+-(BOOL) ovumRecognizerShouldHandleTouch:(UIGestureRecognizer <OBDragDropGestureRecognizer>*)recognizer {
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        id<OBOvumSource> ovumSource = recognizer.ovumSource;
+        
+        if ([ovumSource respondsToSelector:@selector(shouldCreateOvumFromView:)] &&
+            ![ovumSource shouldCreateOvumFromView:recognizer.view])
+        {
+            // Workaround to cancel the gesture recognizer
+            recognizer.enabled = NO;
+            recognizer.enabled = YES;
+            return NO;
+        }
+        return YES;
+    }
+    
+    return recognizer.ovum != nil;
 }
 
 

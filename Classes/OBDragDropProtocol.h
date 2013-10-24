@@ -28,6 +28,9 @@ typedef enum {
 -(OBOvum *) createOvumFromView:(UIView*)sourceView;
 
 @optional
+
+-(BOOL) shouldCreateOvumFromView:(UIView*)sourceView;
+
 // Create the UIView that will follow a user's touch while it moves around the screen
 -(UIView *) createDragRepresentationOfSourceView:(UIView *)sourceView inWindow:(UIWindow*)window;
 -(void) dragViewWillAppear:(UIView *)dragView inWindow:(UIWindow*)window atLocation:(CGPoint)location;
