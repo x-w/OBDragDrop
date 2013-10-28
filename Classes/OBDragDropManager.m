@@ -205,8 +205,9 @@
   {
     if (ovum.currentDropHandlingView)
     {
+      CGPoint locationInCurrentView = [window convertPoint:locationInWindow toView:ovum.currentDropHandlingView];
       id<OBDropZone> dropZone = ovum.currentDropHandlingView.dropZoneHandler;
-      [dropZone ovumExited:ovum inView:ovum.currentDropHandlingView atLocation:locationInView];
+      [dropZone ovumExited:ovum inView:ovum.currentDropHandlingView atLocation:locationInCurrentView];
       ovum.dropAction = OBDropActionNone;
     }
 
