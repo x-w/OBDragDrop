@@ -227,7 +227,7 @@ static NSInteger kLabelTag = 2323;
   label.backgroundColor = [UIColor clearColor];
   label.opaque = NO;
   label.font = [UIFont boldSystemFontOfSize:24.0];
-  label.textAlignment = UITextAlignmentCenter;
+  label.textAlignment = NSTextAlignmentCenter;
   label.textColor = [UIColor whiteColor];
   [ovum.dragView addSubview:label];
   
