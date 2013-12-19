@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>9550B6BD-7321-4D7E-9FA8-0C7110E0A2D5</string>
+	<key>IDESourceControlProjectName</key>
+	<string>OBDragDropTest</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1B1AA65B-85B0-4382-9338-A990F6B4C097</key>
+		<string>https://github.com/Oblong/OBDragDrop.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>OBDragDropTest/OBDragDropTest.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1B1AA65B-85B0-4382-9338-A990F6B4C097</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/Oblong/OBDragDrop.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>1B1AA65B-85B0-4382-9338-A990F6B4C097</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1B1AA65B-85B0-4382-9338-A990F6B4C097</string>
+			<key>IDESourceControlWCCName</key>
+			<string>OBDragDrop</string>
+		</dict>
+	</array>
+</dict>
+</plist>
