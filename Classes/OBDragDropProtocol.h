@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 
 
-typedef enum {
+typedef NS_ENUM(NSUInteger, OBDropAction)
+{
   OBDropActionNone = 0,
   OBDropActionCopy = 1,
   OBDropActionMove = 2,
   OBDropActionDelete = 3,
-} OBDropAction;
+};
 
 
 @class OBOvum;
