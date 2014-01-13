@@ -17,7 +17,7 @@ static NSString *kDropZoneHandlerKey = @"DropZoneHandlerKey";
 
 -(id<OBDropZone>) dropZoneHandler
 {
-  id<OBDropZone> handler = (id<OBDropZone>) objc_getAssociatedObject(self, CFBridgingRetain(kDropZoneHandlerKey));
+  id<OBDropZone> handler = (id<OBDropZone>) objc_getAssociatedObject(self, (__bridge const void *)(kDropZoneHandlerKey));
   return handler;
 }
 
@@ -25,7 +25,7 @@ static NSString *kDropZoneHandlerKey = @"DropZoneHandlerKey";
 -(void) setDropZoneHandler:(id<OBDropZone>)handler
 {
   objc_setAssociatedObject (self,
-                            CFBridgingRetain(kDropZoneHandlerKey),
+                            (__bridge const void *)(kDropZoneHandlerKey),
                             handler,
                             OBJC_ASSOCIATION_ASSIGN
                             );
