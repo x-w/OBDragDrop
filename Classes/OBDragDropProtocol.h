@@ -47,6 +47,9 @@ typedef NS_ENUM(NSUInteger, OBDropAction)
 // Called regardless of whether the ovum drop was successful or cancelled
 -(void) ovumDragEnded:(OBOvum*)ovum;
 
+// If this delegate method is implemented, OBDragDropManager will not automatically animate the returning of the ovum to the source
+-(void)handleReturningToSourceAnimationForOvum:(OBOvum*)ovum completion:(void (^)(void))completion;
+
 @end
 
 

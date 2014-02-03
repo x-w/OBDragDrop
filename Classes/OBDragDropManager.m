@@ -231,18 +231,33 @@
 
 -(void) animateOvumReturningToSource:(OBOvum*)ovum
 {
-  CGPoint dragViewInitialCenter = ovum.dragViewInitialCenter;
-  UIView *dragView = ovum.dragView;
+    if([ovum.source respondsToSelector:@selector(handleReturningToSourceAnimationForOvum:completion:)]) {
+        
+        UIView *dragView = ovum.dragView;
+        
+        [ovum.source handleReturningToSourceAnimationForOvum:ovum completion:^{
+            
+            [dragView removeFromSuperview];
+            overlayWindow.hidden = YES;
+        }];
+    }
+    else {
+        
+        CGPoint dragViewInitialCenter = ovum.dragViewInitialCenter;
+        UIView *dragView = ovum.dragView;
+        
+        [UIView animateWithDuration:0.25 animations:^{
+            dragView.center = dragViewInitialCenter;
+            //dragView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+            dragView.transform = CGAffineTransformIdentity;
+            //dragView.alpha = 0.0;
+        } completion:^(BOOL finished) {
+            [dragView removeFromSuperview];
+            overlayWindow.hidden = YES;
+        }];
+    }
+    
 
-  [UIView animateWithDuration:0.25 animations:^{
-    dragView.center = dragViewInitialCenter;
-    //dragView.transform = CGAffineTransformMakeScale(0.01, 0.01);
-    dragView.transform = CGAffineTransformIdentity;
-    //dragView.alpha = 0.0;
-  } completion:^(BOOL finished) {
-    [dragView removeFromSuperview];
-    overlayWindow.hidden = YES;
-  }];
 }
 
 
