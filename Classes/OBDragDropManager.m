@@ -525,6 +525,12 @@
   {
     // Handle the case where an ovum isn't dropped on a drop target
     OBOvum *ovum = recognizer.ovum;
+    
+    // The gesture can be canceled while the ovum is on top of a target (user taps the home or power button during the drag).
+    // In which case the correct action is OBDropActionNone as the gesture wasn't completed.
+    if (ovum.dropAction != OBDropActionNone)
+      ovum.dropAction = OBDropActionNone;
+    
     UIView *handlingView = ovum.currentDropHandlingView;
     CGPoint locationInView = [hostWindow convertPoint:locationInHostWindow toView:handlingView];
 
