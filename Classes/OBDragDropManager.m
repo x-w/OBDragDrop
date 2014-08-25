@@ -378,7 +378,10 @@
     if ([ovumSource respondsToSelector:@selector(ovumDragWillBegin:)])
       [ovumSource ovumDragWillBegin:recognizer.ovum];
 
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:recognizer.ovum, OBOvumDictionaryKey, nil];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              recognizer.ovum, OBOvumDictionaryKey,
+                              recognizer, OBGestureRecognizerDictionaryKey,
+                              nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:OBDragDropManagerWillBeginDragNotification object:self userInfo:userInfo];
   } else if (recognizer.state == UIGestureRecognizerStateChanged)
   {
@@ -446,7 +449,10 @@
 
     [self cleanupOvum:ovum];
 
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:recognizer.ovum, OBOvumDictionaryKey, nil];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              recognizer.ovum, OBOvumDictionaryKey,
+                              recognizer, OBGestureRecognizerDictionaryKey,
+                              nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:OBDragDropManagerDidEndDragNotification object:self userInfo:userInfo];
     
     // Reset the ovum recognizer
@@ -474,7 +480,10 @@
 
     [self cleanupOvum:ovum];
 
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:recognizer.ovum, OBOvumDictionaryKey, nil];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              recognizer.ovum, OBOvumDictionaryKey,
+                              recognizer, OBGestureRecognizerDictionaryKey,
+                              nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:OBDragDropManagerDidEndDragNotification object:self userInfo:userInfo];
     
     // Reset the ovum recognizer

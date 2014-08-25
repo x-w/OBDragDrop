@@ -16,6 +16,7 @@
 #define OBDragDropManagerDidEndDragNotification @"OBDragDropManagerDidEndDrag"
 
 #define OBOvumDictionaryKey @"ovum"
+#define OBGestureRecognizerDictionaryKey @"recognizer"
 
 // OBOvum represents a data object that is being dragged around a UI window, named
 // after the g-speak equivalent within the Ovipositor infrastructure.
