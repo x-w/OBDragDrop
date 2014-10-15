@@ -10,29 +10,41 @@
 	<string>OBDragDropTest</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>1B1AA65B-85B0-4382-9338-A990F6B4C097</key>
-		<string>https://github.com/Oblong/OBDragDrop.git</string>
+		<key>1B44FA92A04644E94DDD853B2B58310904A3A74A</key>
+		<string>bitbucket.org:whenitsdone/chesspuzzle.git</string>
+		<key>A02359F149F8DBE0944C595864AA4A80EEFC16C4</key>
+		<string>https://github.com/x-w/OBDragDrop.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>OBDragDropTest/OBDragDropTest.xcodeproj/project.xcworkspace</string>
+	<string>OBDragDropTest/OBDragDropTest.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>1B1AA65B-85B0-4382-9338-A990F6B4C097</key>
+		<key>1B44FA92A04644E94DDD853B2B58310904A3A74A</key>
+		<string>../../../../..</string>
+		<key>A02359F149F8DBE0944C595864AA4A80EEFC16C4</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/Oblong/OBDragDrop.git</string>
+	<string>https://github.com/x-w/OBDragDrop.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>1B1AA65B-85B0-4382-9338-A990F6B4C097</string>
+	<string>A02359F149F8DBE0944C595864AA4A80EEFC16C4</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>1B1AA65B-85B0-4382-9338-A990F6B4C097</string>
+			<string>1B44FA92A04644E94DDD853B2B58310904A3A74A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>..</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>A02359F149F8DBE0944C595864AA4A80EEFC16C4</string>
 			<key>IDESourceControlWCCName</key>
 			<string>OBDragDrop</string>
 		</dict>
