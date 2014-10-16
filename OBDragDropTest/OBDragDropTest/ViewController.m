@@ -101,9 +101,9 @@ static NSInteger kItemViewIndex = 100;
     [leftView addSubview:itemView];
     
     // Drag drop with long press gesture
-    UIGestureRecognizer *recognizer = [dragDropManager createLongPressDragDropGestureRecognizerWithSource:self];
+    //UIGestureRecognizer *recognizer = [dragDropManager createLongPressDragDropGestureRecognizerWithSource:self];
     // Drag drop with pan gesture
-    //UIGestureRecognizer *recognizer = [dragDropManager createDragDropGestureRecognizerWithClass:[UIPanGestureRecognizer class] source:self];
+    UIGestureRecognizer *recognizer = [dragDropManager createDragDropGestureRecognizerWithClass:[UIPanGestureRecognizer class] source:self];
     [itemView addGestureRecognizer:recognizer];
   }
   
