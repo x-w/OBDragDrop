@@ -71,6 +71,8 @@ typedef NS_ENUM(NSUInteger, OBDropAction)
 // -(void) animateOvumDrop:(OBOvum*)ovum withAnimation:(void (^)()) dropAnimation completion:(void (^)(BOOL completed))completion;
 -(void) handleDropAnimationForOvum:(OBOvum*)ovum withDragView:(UIView*)dragView dragDropManager:(OBDragDropManager*)dragDropManager;
 
+-(void)ovumRejected:(OBOvum*)ovum inView:(UIView*)view;
+
 @end
 
 

@@ -228,17 +228,21 @@
   }
 }
 
+-(void)hideAndRemoveDragView:(OBOvum*)ovum
+{
+    [ovum.dragView removeFromSuperview];
+    overlayWindow.hidden = YES;
+}
+
 
 -(void) animateOvumReturningToSource:(OBOvum*)ovum
 {
     if([ovum.source respondsToSelector:@selector(handleReturningToSourceAnimationForOvum:completion:)]) {
         
-        UIView *dragView = ovum.dragView;
+        //UIView *dragView = ovum.dragView;
         
         [ovum.source handleReturningToSourceAnimationForOvum:ovum completion:^{
-            
-            [dragView removeFromSuperview];
-            overlayWindow.hidden = YES;
+            [self hideAndRemoveDragView:ovum];
         }];
     }
     else {
@@ -252,8 +256,7 @@
             dragView.transform = CGAffineTransformIdentity;
             //dragView.alpha = 0.0;
         } completion:^(BOOL finished) {
-            [dragView removeFromSuperview];
-            overlayWindow.hidden = YES;
+            [self hideAndRemoveDragView:ovum];
         }];
     }
     
@@ -442,9 +445,17 @@
       UIView *handlingView = ovum.currentDropHandlingView;
       CGPoint locationInView = [hostWindow convertPoint:locationInHostWindow toView:handlingView];
       [dropZone ovumExited:ovum inView:handlingView atLocation:locationInView];
-
-      // Drop is rejected, return the ovum to its source
-      [self animateOvumReturningToSource:ovum];
+        
+      if (ovum.targetDropView.dropZoneHandler && [ovum.targetDropView.dropZoneHandler respondsToSelector:@selector(ovumRejected:inView:)])
+      {
+          [ovum.targetDropView.dropZoneHandler ovumRejected:ovum inView:ovum.targetDropView];
+          [self hideAndRemoveDragView:ovum];
+      }
+      else
+      {
+        // Drop is rejected, return the ovum to its source
+        [self animateOvumReturningToSource:ovum];
+      }
     }
 
     [self cleanupOvum:ovum];
@@ -476,7 +487,16 @@
     id<OBDropZone> dropZone = handlingView.dropZoneHandler;
     [dropZone ovumExited:ovum inView:handlingView atLocation:locationInView];
 
-    [self animateOvumReturningToSource:ovum];
+      if (ovum.targetDropView.dropZoneHandler && [ovum.targetDropView.dropZoneHandler respondsToSelector:@selector(ovumRejected:inView:)])
+      {
+          [ovum.targetDropView.dropZoneHandler ovumRejected:ovum inView:ovum.targetDropView];
+          [self hideAndRemoveDragView:ovum];
+      }
+      else
+      {
+          // Drop is rejected, return the ovum to its source
+          [self animateOvumReturningToSource:ovum];
+      }
 
     [self cleanupOvum:ovum];
 

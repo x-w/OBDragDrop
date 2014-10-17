@@ -40,6 +40,8 @@
   BOOL shouldScale;
 }
 @property (nonatomic, weak) id<OBOvumSource> source;
+@property (nonatomic, weak) UIView* targetDropView;
+
 @property (nonatomic, strong) id dataObject;
 @property (nonatomic, strong) NSString *tag;
 @property (nonatomic, assign) OBDropAction dropAction;
