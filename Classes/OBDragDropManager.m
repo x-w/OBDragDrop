@@ -228,9 +228,9 @@
   }
 }
 
--(void)hideAndRemoveDragView:(OBOvum*)ovum
+-(void)hideAndRemoveDragView:(UIView*)dragView
 {
-    [ovum.dragView removeFromSuperview];
+    [dragView removeFromSuperview];
     overlayWindow.hidden = YES;
 }
 
@@ -239,10 +239,10 @@
 {
     if([ovum.source respondsToSelector:@selector(handleReturningToSourceAnimationForOvum:completion:)]) {
         
-        //UIView *dragView = ovum.dragView;
+        UIView *dragView = ovum.dragView;
         
         [ovum.source handleReturningToSourceAnimationForOvum:ovum completion:^{
-            [self hideAndRemoveDragView:ovum];
+            [self hideAndRemoveDragView:dragView];
         }];
     }
     else {
@@ -256,7 +256,7 @@
             dragView.transform = CGAffineTransformIdentity;
             //dragView.alpha = 0.0;
         } completion:^(BOOL finished) {
-            [self hideAndRemoveDragView:ovum];
+            [self hideAndRemoveDragView:dragView];
         }];
     }
     
@@ -449,7 +449,7 @@
       if (ovum.targetDropView.dropZoneHandler && [ovum.targetDropView.dropZoneHandler respondsToSelector:@selector(ovumRejected:inView:)])
       {
           [ovum.targetDropView.dropZoneHandler ovumRejected:ovum inView:ovum.targetDropView];
-          [self hideAndRemoveDragView:ovum];
+          [self hideAndRemoveDragView:ovum.dragView];
       }
       else
       {
@@ -490,7 +490,7 @@
       if (ovum.targetDropView.dropZoneHandler && [ovum.targetDropView.dropZoneHandler respondsToSelector:@selector(ovumRejected:inView:)])
       {
           [ovum.targetDropView.dropZoneHandler ovumRejected:ovum inView:ovum.targetDropView];
-          [self hideAndRemoveDragView:ovum];
+          [self hideAndRemoveDragView:ovum.dragView];
       }
       else
       {
